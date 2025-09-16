@@ -1,0 +1,19 @@
+{
+  "name": "mic-speaker-streamer",
+  "productName": "Mic & Speaker Streamer",
+  "description": "Electron app for simultaneously streaming microphone and speaker audio",
+  "keywords": [],
+  "main": "./main.js",
+  "version": "1.0.0",
+  "author": "Alec Armbruster <alectrocute@gmail.com>",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "dotenv": "^17.2.0",
+    "electron-audio-loopback": "^1.0.5"
+  },
+  "devDependencies": {
+    "electron": "35.0.0"
+  }
+}
