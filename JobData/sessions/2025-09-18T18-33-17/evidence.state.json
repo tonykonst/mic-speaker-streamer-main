@@ -1,0 +1,340 @@
+{
+  "sessionId": "2025-09-18T18-33-17",
+  "revision": 7,
+  "requirements": {
+    "fallback-8": {
+      "id": "fallback-8",
+      "confidence": 7,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-10",
+          "timestamp": "2025-09-18T18:33:30.173Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "Now I can play around with some gradients, add some effects between me and the background.",
+          "tokens": [
+            "and",
+            "and",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-9",
+          "timestamp": "2025-09-18T18:33:28.406Z",
+          "source": "microphone",
+          "score": 0.067,
+          "text": "That's the beauty.",
+          "tokens": [
+            "that",
+            "that"
+          ]
+        },
+        {
+          "chunkId": "chunk-8",
+          "timestamp": "2025-09-18T18:33:27.824Z",
+          "source": "microphone",
+          "score": 0.067,
+          "text": "Just the two of me and because there's so many on the island.",
+          "tokens": [
+            "and",
+            "and",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-6",
+          "timestamp": "2025-09-18T18:33:26.209Z",
+          "source": "speaker",
+          "score": 0.133,
+          "text": "And that's going to remove the background behind me.",
+          "tokens": [
+            "and",
+            "that",
+            "and",
+            "that",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-4",
+          "timestamp": "2025-09-18T18:33:23.740Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "And then there's just a simple remove background option.",
+          "tokens": [
+            "and",
+            "and",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-3",
+          "timestamp": "2025-09-18T18:33:23.314Z",
+          "source": "microphone",
+          "score": 0.133,
+          "text": "and we should work that process.",
+          "tokens": [
+            "and",
+            "that",
+            "and",
+            "that",
+            "and"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-18T18:33:30.173Z",
+      "observations": 6,
+      "topScore": 0.13333333333333333
+    },
+    "fallback-6": {
+      "id": "fallback-6",
+      "confidence": 4,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-10",
+          "timestamp": "2025-09-18T18:33:30.173Z",
+          "source": "speaker",
+          "score": 0.033,
+          "text": "Now I can play around with some gradients, add some effects between me and the background.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-9",
+          "timestamp": "2025-09-18T18:33:28.406Z",
+          "source": "microphone",
+          "score": 0.033,
+          "text": "That's the beauty.",
+          "tokens": [
+            "that",
+            "that",
+            "that"
+          ]
+        },
+        {
+          "chunkId": "chunk-8",
+          "timestamp": "2025-09-18T18:33:27.824Z",
+          "source": "microphone",
+          "score": 0.033,
+          "text": "Just the two of me and because there's so many on the island.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-6",
+          "timestamp": "2025-09-18T18:33:26.209Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "And that's going to remove the background behind me.",
+          "tokens": [
+            "that",
+            "that",
+            "that",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-4",
+          "timestamp": "2025-09-18T18:33:23.740Z",
+          "source": "speaker",
+          "score": 0.033,
+          "text": "And then there's just a simple remove background option.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-3",
+          "timestamp": "2025-09-18T18:33:23.314Z",
+          "source": "microphone",
+          "score": 0.067,
+          "text": "and we should work that process.",
+          "tokens": [
+            "that",
+            "that",
+            "that",
+            "and"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-18T18:33:30.173Z",
+      "observations": 6,
+      "topScore": 0.06666666666666667
+    },
+    "fallback-9": {
+      "id": "fallback-9",
+      "confidence": 6,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-9",
+          "timestamp": "2025-09-18T18:33:28.406Z",
+          "source": "microphone",
+          "score": 0.067,
+          "text": "That's the beauty.",
+          "tokens": [
+            "that",
+            "that"
+          ]
+        },
+        {
+          "chunkId": "chunk-6",
+          "timestamp": "2025-09-18T18:33:26.209Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "And that's going to remove the background behind me.",
+          "tokens": [
+            "that",
+            "that"
+          ]
+        },
+        {
+          "chunkId": "chunk-3",
+          "timestamp": "2025-09-18T18:33:23.314Z",
+          "source": "microphone",
+          "score": 0.067,
+          "text": "and we should work that process.",
+          "tokens": [
+            "that",
+            "that"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-18T18:33:28.406Z",
+      "observations": 3,
+      "topScore": 0.06666666666666667
+    },
+    "fallback-10": {
+      "id": "fallback-10",
+      "confidence": 10,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-10",
+          "timestamp": "2025-09-18T18:33:30.173Z",
+          "source": "speaker",
+          "score": 0.125,
+          "text": "Now I can play around with some gradients, add some effects between me and the background.",
+          "tokens": [
+            "with",
+            "with",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-8",
+          "timestamp": "2025-09-18T18:33:27.824Z",
+          "source": "microphone",
+          "score": 0.063,
+          "text": "Just the two of me and because there's so many on the island.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-6",
+          "timestamp": "2025-09-18T18:33:26.209Z",
+          "source": "speaker",
+          "score": 0.063,
+          "text": "And that's going to remove the background behind me.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-4",
+          "timestamp": "2025-09-18T18:33:23.740Z",
+          "source": "speaker",
+          "score": 0.063,
+          "text": "And then there's just a simple remove background option.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-3",
+          "timestamp": "2025-09-18T18:33:23.314Z",
+          "source": "microphone",
+          "score": 0.063,
+          "text": "and we should work that process.",
+          "tokens": [
+            "and"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-18T18:33:30.173Z",
+      "observations": 5,
+      "topScore": 0.125
+    },
+    "fallback-5": {
+      "id": "fallback-5",
+      "confidence": 33,
+      "status": "likely",
+      "evidence": [
+        {
+          "chunkId": "chunk-17",
+          "timestamp": "2025-09-18T18:33:37.748Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "There's the pay spot right there.",
+          "tokens": [
+            "the",
+            "the"
+          ]
+        },
+        {
+          "chunkId": "chunk-10",
+          "timestamp": "2025-09-18T18:33:30.173Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "Now I can play around with some gradients, add some effects between me and the background.",
+          "tokens": [
+            "the",
+            "the"
+          ]
+        },
+        {
+          "chunkId": "chunk-9",
+          "timestamp": "2025-09-18T18:33:28.406Z",
+          "source": "microphone",
+          "score": 0.333,
+          "text": "That's the beauty.",
+          "tokens": [
+            "the",
+            "the"
+          ]
+        },
+        {
+          "chunkId": "chunk-8",
+          "timestamp": "2025-09-18T18:33:27.824Z",
+          "source": "microphone",
+          "score": 0.333,
+          "text": "Just the two of me and because there's so many on the island.",
+          "tokens": [
+            "the",
+            "the"
+          ]
+        },
+        {
+          "chunkId": "chunk-6",
+          "timestamp": "2025-09-18T18:33:26.209Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "And that's going to remove the background behind me.",
+          "tokens": [
+            "the",
+            "the"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-18T18:33:37.748Z",
+      "observations": 5,
+      "topScore": 0.3333333333333333
+    }
+  },
+  "lastChunkAt": "2025-09-18T18:33:37.748Z"
+}

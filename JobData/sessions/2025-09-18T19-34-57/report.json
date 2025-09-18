@@ -1,0 +1,85 @@
+{
+  "sessionId": "2025-09-18T19-34-57",
+  "overallFit": 15,
+  "updatedAt": "2025-09-18T19:37:10.358Z",
+  "revision": 35,
+  "requirements": {
+    "fallback-4": {
+      "id": "fallback-4",
+      "title": "Type: Full-time",
+      "confidence": 28,
+      "verdict": "needs_more",
+      "reasoning": "Recent evidence (speaker @ 2025-09-18T19:35:10.496Z): \"that time on.\" (score 0.333).",
+      "followUpQuestion": null,
+      "mustHave": true,
+      "niceToHave": false,
+      "lastUpdated": "2025-09-18T19:37:10.358Z"
+    },
+    "fallback-5": {
+      "id": "fallback-5",
+      "title": "About the Role",
+      "confidence": 33,
+      "verdict": "likely",
+      "reasoning": "Recent evidence (speaker @ 2025-09-18T19:37:10.351Z): \"while keeping the solution stable.\" (score 0.333).",
+      "followUpQuestion": null,
+      "mustHave": true,
+      "niceToHave": false,
+      "lastUpdated": "2025-09-18T19:37:10.358Z"
+    },
+    "fallback-1": {
+      "id": "fallback-1",
+      "title": "Senior Full-Stack Engineer (Real-Time AI Platforms)",
+      "confidence": 15,
+      "verdict": "needs_more",
+      "reasoning": "Recent evidence (speaker @ 2025-09-18T19:36:17.128Z): \"Real-time.\" (score 0.143).",
+      "followUpQuestion": null,
+      "mustHave": true,
+      "niceToHave": false,
+      "lastUpdated": "2025-09-18T19:37:10.358Z"
+    },
+    "fallback-8": {
+      "id": "fallback-8",
+      "title": "Design, build, and maintain Electron/Node.js features that capture JD inputs, st",
+      "confidence": 7,
+      "verdict": "risk",
+      "reasoning": "Recent evidence (speaker @ 2025-09-18T19:37:10.164Z): \"and transparent.\" (score 0.067).",
+      "followUpQuestion": null,
+      "mustHave": true,
+      "niceToHave": false,
+      "lastUpdated": "2025-09-18T19:37:10.358Z"
+    },
+    "fallback-10": {
+      "id": "fallback-10",
+      "title": "Integrate OpenAI Realtime/Responses/Embeddings APIs with strong attention to rel",
+      "confidence": 7,
+      "verdict": "risk",
+      "reasoning": "Recent evidence (speaker @ 2025-09-18T19:37:10.164Z): \"and transparent.\" (score 0.063).",
+      "followUpQuestion": null,
+      "mustHave": true,
+      "niceToHave": false,
+      "lastUpdated": "2025-09-18T19:37:10.358Z"
+    },
+    "fallback-6": {
+      "id": "fallback-6",
+      "title": "We’re building a real-time interview intelligence platform that scores candidate",
+      "confidence": 4,
+      "verdict": "risk",
+      "reasoning": "Recent evidence (speaker @ 2025-09-18T19:37:10.164Z): \"and transparent.\" (score 0.033).",
+      "followUpQuestion": null,
+      "mustHave": true,
+      "niceToHave": false,
+      "lastUpdated": "2025-09-18T19:37:10.358Z"
+    },
+    "fallback-9": {
+      "id": "fallback-9",
+      "title": "Implement high-performance data pipelines that transform audio transcripts into ",
+      "confidence": 11,
+      "verdict": "risk",
+      "reasoning": "Recent evidence (speaker @ 2025-09-18T19:37:00.812Z): \"I believe that my experience in streaming data processing\" (score 0.133).",
+      "followUpQuestion": null,
+      "mustHave": true,
+      "niceToHave": false,
+      "lastUpdated": "2025-09-18T19:37:10.358Z"
+    }
+  }
+}

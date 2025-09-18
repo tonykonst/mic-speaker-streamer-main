@@ -1,0 +1,382 @@
+{
+  "sessionId": "2025-09-18T18-42-32",
+  "revision": 9,
+  "requirements": {
+    "fallback-5": {
+      "id": "fallback-5",
+      "confidence": 33,
+      "status": "likely",
+      "evidence": [
+        {
+          "chunkId": "chunk-11",
+          "timestamp": "2025-09-18T18:43:17.047Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "One of my favorite apps on the Mac right now has to be Shortwave, which is an email app that has some incredibly useful AI functions.",
+          "tokens": [
+            "the",
+            "the"
+          ]
+        },
+        {
+          "chunkId": "chunk-5",
+          "timestamp": "2025-09-18T18:42:48.099Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "off the box and into wherever you need to drop it.",
+          "tokens": [
+            "the",
+            "the"
+          ]
+        },
+        {
+          "chunkId": "chunk-4",
+          "timestamp": "2025-09-18T18:42:46.310Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "and then you pull the file.",
+          "tokens": [
+            "the",
+            "the"
+          ]
+        },
+        {
+          "chunkId": "chunk-2",
+          "timestamp": "2025-09-18T18:42:42.966Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "and you can place that file inside of the box and then you pull up another location that you want.",
+          "tokens": [
+            "the",
+            "the"
+          ]
+        },
+        {
+          "chunkId": "chunk-1",
+          "timestamp": "2025-09-18T18:42:40.886Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "simply grab a file, then you give your mouse a little wiggle and then all of a sudden the box will pop up.",
+          "tokens": [
+            "the",
+            "the"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-18T18:43:17.047Z",
+      "observations": 5,
+      "topScore": 0.3333333333333333
+    },
+    "fallback-6": {
+      "id": "fallback-6",
+      "confidence": 4,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-11",
+          "timestamp": "2025-09-18T18:43:17.047Z",
+          "source": "speaker",
+          "score": 0.033,
+          "text": "One of my favorite apps on the Mac right now has to be Shortwave, which is an email app that has some incredibly useful AI functions.",
+          "tokens": [
+            "that",
+            "that",
+            "that"
+          ]
+        },
+        {
+          "chunkId": "chunk-9",
+          "timestamp": "2025-09-18T18:43:08.384Z",
+          "source": "speaker",
+          "score": 0.033,
+          "text": "that I just mentioned.",
+          "tokens": [
+            "that",
+            "that",
+            "that"
+          ]
+        },
+        {
+          "chunkId": "chunk-8",
+          "timestamp": "2025-09-18T18:43:07.844Z",
+          "source": "speaker",
+          "score": 0.033,
+          "text": "features available for power users out there, but I like this very simple primary function.",
+          "tokens": [
+            "features"
+          ]
+        },
+        {
+          "chunkId": "chunk-6",
+          "timestamp": "2025-09-18T18:42:56.347Z",
+          "source": "speaker",
+          "score": 0.1,
+          "text": "You can also drag and drop this directly into some tiles that trigger different functions like sending it via mail, messages, and even AirDrop.",
+          "tokens": [
+            "that",
+            "that",
+            "you",
+            "that",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-5",
+          "timestamp": "2025-09-18T18:42:48.099Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "off the box and into wherever you need to drop it.",
+          "tokens": [
+            "you",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-4",
+          "timestamp": "2025-09-18T18:42:46.310Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "and then you pull the file.",
+          "tokens": [
+            "you",
+            "and"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-18T18:43:17.047Z",
+      "observations": 9,
+      "topScore": 0.1
+    },
+    "fallback-8": {
+      "id": "fallback-8",
+      "confidence": 7,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-11",
+          "timestamp": "2025-09-18T18:43:17.047Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "One of my favorite apps on the Mac right now has to be Shortwave, which is an email app that has some incredibly useful AI functions.",
+          "tokens": [
+            "that",
+            "that"
+          ]
+        },
+        {
+          "chunkId": "chunk-9",
+          "timestamp": "2025-09-18T18:43:08.384Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "that I just mentioned.",
+          "tokens": [
+            "that",
+            "that"
+          ]
+        },
+        {
+          "chunkId": "chunk-8",
+          "timestamp": "2025-09-18T18:43:07.844Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "features available for power users out there, but I like this very simple primary function.",
+          "tokens": [
+            "features",
+            "features"
+          ]
+        },
+        {
+          "chunkId": "chunk-6",
+          "timestamp": "2025-09-18T18:42:56.347Z",
+          "source": "speaker",
+          "score": 0.133,
+          "text": "You can also drag and drop this directly into some tiles that trigger different functions like sending it via mail, messages, and even AirDrop.",
+          "tokens": [
+            "and",
+            "that",
+            "and",
+            "that",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-5",
+          "timestamp": "2025-09-18T18:42:48.099Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "off the box and into wherever you need to drop it.",
+          "tokens": [
+            "and",
+            "and",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-4",
+          "timestamp": "2025-09-18T18:42:46.310Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "and then you pull the file.",
+          "tokens": [
+            "and",
+            "and",
+            "and"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-18T18:43:17.047Z",
+      "observations": 9,
+      "topScore": 0.13333333333333333
+    },
+    "fallback-10": {
+      "id": "fallback-10",
+      "confidence": 6,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-6",
+          "timestamp": "2025-09-18T18:42:56.347Z",
+          "source": "speaker",
+          "score": 0.063,
+          "text": "You can also drag and drop this directly into some tiles that trigger different functions like sending it via mail, messages, and even AirDrop.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-5",
+          "timestamp": "2025-09-18T18:42:48.099Z",
+          "source": "speaker",
+          "score": 0.063,
+          "text": "off the box and into wherever you need to drop it.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-4",
+          "timestamp": "2025-09-18T18:42:46.310Z",
+          "source": "speaker",
+          "score": 0.063,
+          "text": "and then you pull the file.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-1",
+          "timestamp": "2025-09-18T18:42:40.886Z",
+          "source": "speaker",
+          "score": 0.063,
+          "text": "simply grab a file, then you give your mouse a little wiggle and then all of a sudden the box will pop up.",
+          "tokens": [
+            "and"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-18T18:42:56.347Z",
+      "observations": 4,
+      "topScore": 0.0625
+    },
+    "fallback-3": {
+      "id": "fallback-3",
+      "confidence": 15,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-2",
+          "timestamp": "2025-09-18T18:42:42.966Z",
+          "source": "speaker",
+          "score": 0.25,
+          "text": "and you can place that file inside of the box and then you pull up another location that you want.",
+          "tokens": [
+            "location",
+            "location"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-18T18:42:42.966Z",
+      "observations": 1,
+      "topScore": 0.25
+    },
+    "fallback-9": {
+      "id": "fallback-9",
+      "confidence": 7,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-11",
+          "timestamp": "2025-09-18T18:43:17.047Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "One of my favorite apps on the Mac right now has to be Shortwave, which is an email app that has some incredibly useful AI functions.",
+          "tokens": [
+            "that",
+            "that"
+          ]
+        },
+        {
+          "chunkId": "chunk-9",
+          "timestamp": "2025-09-18T18:43:08.384Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "that I just mentioned.",
+          "tokens": [
+            "that",
+            "that"
+          ]
+        },
+        {
+          "chunkId": "chunk-6",
+          "timestamp": "2025-09-18T18:42:56.347Z",
+          "source": "speaker",
+          "score": 0.133,
+          "text": "You can also drag and drop this directly into some tiles that trigger different functions like sending it via mail, messages, and even AirDrop.",
+          "tokens": [
+            "that",
+            "into",
+            "that",
+            "into"
+          ]
+        },
+        {
+          "chunkId": "chunk-5",
+          "timestamp": "2025-09-18T18:42:48.099Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "off the box and into wherever you need to drop it.",
+          "tokens": [
+            "into",
+            "into"
+          ]
+        },
+        {
+          "chunkId": "chunk-3",
+          "timestamp": "2025-09-18T18:42:44.670Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "That box stays present.",
+          "tokens": [
+            "that",
+            "that"
+          ]
+        },
+        {
+          "chunkId": "chunk-2",
+          "timestamp": "2025-09-18T18:42:42.966Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "and you can place that file inside of the box and then you pull up another location that you want.",
+          "tokens": [
+            "that",
+            "that"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-18T18:43:17.047Z",
+      "observations": 6,
+      "topScore": 0.13333333333333333
+    }
+  },
+  "lastChunkAt": "2025-09-18T18:43:17.047Z"
+}

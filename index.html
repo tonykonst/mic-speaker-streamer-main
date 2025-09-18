@@ -106,6 +106,10 @@
   <div class="container">
     <h1>Mic & Speaker Streamer</h1>
     <div class="controls">
+      <button id="jdLoadBtn" type="button">Load JD (File)</button>
+      <button id="jdPasteBtn" type="button">Paste JD</button>
+      <button id="jdClearBtn" type="button" disabled>Clear JD</button>
+      <button id="exportReportBtn" type="button" disabled>Export Report</button>
       <button id="startBtn" type="button">Start Streaming</button>
       <button id="stopBtn" type="button" disabled>Stop Streaming</button>
       <button id="recordBtn" type="button" disabled>Start Recording</button>
@@ -120,7 +124,15 @@
       <div id="micStatus" class="status disconnected">Microphone: Disconnected</div>
       <div id="speakerStatus" class="status disconnected">System Audio: Disconnected</div>
       <div id="recordStatus" class="status disconnected">Recording: Stopped</div>
+      <div id="jdFitStatus" class="status disconnected">JD Fit: N/A</div>
     </div>
+    <div class="section">Job Description</div>
+    <pre class="results" id="jdPreview">No job description loaded.</pre>
+    <input id="jdFileInput" type="file" accept=".txt,.md,.markdown,.json" style="display:none" />
+    <div class="section">Guidance Prompts</div>
+    <pre class="results" id="guidanceQueue">No guidance prompts.</pre>
+    <div class="section">Live Report</div>
+    <pre class="results" id="reportPreview">Report will appear after the session starts.</pre>
     <div class="section">Microphone Transcription</div>
     <pre class="results" id="micResults">Waiting for microphone input...</pre>
     <div class="section">System Audio Transcription</div>

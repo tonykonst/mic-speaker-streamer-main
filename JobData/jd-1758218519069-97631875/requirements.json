@@ -1,0 +1,109 @@
+{
+  "revision": 1758218522217,
+  "generatedAt": "2025-09-18T18:01:59.069Z",
+  "source": {
+    "type": "fallback"
+  },
+  "requirements": [
+    {
+      "id": "fallback-1",
+      "title": "Senior Full-Stack Engineer (Real-Time AI Platforms)",
+      "description": "Senior Full-Stack Engineer (Real-Time AI Platforms)",
+      "priority": "medium",
+      "competencies": [],
+      "mustHave": true,
+      "niceToHave": false,
+      "probingQuestions": []
+    },
+    {
+      "id": "fallback-2",
+      "title": "Company: InsightLoop.ai",
+      "description": "Company: InsightLoop.ai",
+      "priority": "medium",
+      "competencies": [],
+      "mustHave": true,
+      "niceToHave": false,
+      "probingQuestions": []
+    },
+    {
+      "id": "fallback-3",
+      "title": "Location: Hybrid (San Francisco, CA)",
+      "description": "Location: Hybrid (San Francisco, CA)",
+      "priority": "medium",
+      "competencies": [],
+      "mustHave": true,
+      "niceToHave": false,
+      "probingQuestions": []
+    },
+    {
+      "id": "fallback-4",
+      "title": "Type: Full-time",
+      "description": "Type: Full-time",
+      "priority": "medium",
+      "competencies": [],
+      "mustHave": true,
+      "niceToHave": false,
+      "probingQuestions": []
+    },
+    {
+      "id": "fallback-5",
+      "title": "About the Role",
+      "description": "About the Role",
+      "priority": "medium",
+      "competencies": [],
+      "mustHave": true,
+      "niceToHave": false,
+      "probingQuestions": []
+    },
+    {
+      "id": "fallback-6",
+      "title": "We’re building a real-time interview intelligence platform that scores candidate",
+      "description": "We’re building a real-time interview intelligence platform that scores candidates against live Job Descriptions. You’ll own end-to-end delivery of features that ingest JD inputs, run streaming analysis, and surface actionable insights to our users.",
+      "priority": "medium",
+      "competencies": [],
+      "mustHave": true,
+      "niceToHave": false,
+      "probingQuestions": []
+    },
+    {
+      "id": "fallback-7",
+      "title": "Key Responsibilities",
+      "description": "Key Responsibilities",
+      "priority": "medium",
+      "competencies": [],
+      "mustHave": true,
+      "niceToHave": false,
+      "probingQuestions": []
+    },
+    {
+      "id": "fallback-8",
+      "title": "Design, build, and maintain Electron/Node.js features that capture JD inputs, st",
+      "description": "Design, build, and maintain Electron/Node.js features that capture JD inputs, stream telemetry, and write persistent reports.",
+      "priority": "medium",
+      "competencies": [],
+      "mustHave": true,
+      "niceToHave": false,
+      "probingQuestions": []
+    },
+    {
+      "id": "fallback-9",
+      "title": "Implement high-performance data pipelines that transform audio transcripts into ",
+      "description": "Implement high-performance data pipelines that transform audio transcripts into structured evidence in near-real time.",
+      "priority": "medium",
+      "competencies": [],
+      "mustHave": true,
+      "niceToHave": false,
+      "probingQuestions": []
+    },
+    {
+      "id": "fallback-10",
+      "title": "Integrate OpenAI Realtime/Responses/Embeddings APIs with strong attention to rel",
+      "description": "Integrate OpenAI Realtime/Responses/Embeddings APIs with strong attention to reliability, rate limits, and security compliance.",
+      "priority": "medium",
+      "competencies": [],
+      "mustHave": true,
+      "niceToHave": false,
+      "probingQuestions": []
+    }
+  ]
+}

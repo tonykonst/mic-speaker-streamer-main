@@ -260,32 +260,34 @@ let systemAudioStream = null;
 
 // Logging variables
 let currentSessionId = null;
-let micLogBuffer = '';
-let speakerLogBuffer = '';
+let activeJD = null;
+let transcriptChunkSeq = 0;
+let latestReasoning = null;
+let guidanceEntries = [];
 
 // Write queue to prevent race conditions
 class WriteQueue {
     constructor() {
-        this.queues = new Map(); // path -> queue
-        this.processing = new Map(); // path -> boolean
+        this.queues = new Map(); // key -> queue
+        this.processing = new Map(); // key -> boolean
     }
 
-    async enqueue(filePath, operation) {
-        if (!this.queues.has(filePath)) {
-            this.queues.set(filePath, []);
+    async enqueue(key, operation) {
+        if (!this.queues.has(key)) {
+            this.queues.set(key, []);
         }
 
         return new Promise((resolve, reject) => {
-            this.queues.get(filePath).push({ operation, resolve, reject });
-            this.processQueue(filePath);
+            this.queues.get(key).push({ operation, resolve, reject });
+            this.processQueue(key);
         });
     }
 
-    async processQueue(filePath) {
-        if (this.processing.get(filePath)) return;
+    async processQueue(key) {
+        if (this.processing.get(key)) return;
 
-        this.processing.set(filePath, true);
-        const queue = this.queues.get(filePath);
+        this.processing.set(key, true);
+        const queue = this.queues.get(key);
 
         while (queue.length > 0) {
             const { operation, resolve, reject } = queue.shift();
@@ -297,7 +299,7 @@ class WriteQueue {
             }
         }
 
-        this.processing.set(filePath, false);
+        this.processing.set(key, false);
     }
 }
 
@@ -310,10 +312,23 @@ const micStatus = document.getElementById('micStatus');
 const micSelect = document.getElementById('micSelect');
 const speakerStatus = document.getElementById('speakerStatus');
 const recordStatus = document.getElementById('recordStatus');
+const jdFitStatus = document.getElementById('jdFitStatus');
 const startBtn = document.getElementById('startBtn');
 const stopBtn = document.getElementById('stopBtn');
 const recordBtn = document.getElementById('recordBtn');
 const modelSelect = document.getElementById('modelSelect');
+const jdLoadBtn = document.getElementById('jdLoadBtn');
+const jdPasteBtn = document.getElementById('jdPasteBtn');
+const jdClearBtn = document.getElementById('jdClearBtn');
+const jdPreview = document.getElementById('jdPreview');
+const jdFileInput = document.getElementById('jdFileInput');
+const guidanceQueue = document.getElementById('guidanceQueue');
+const reportPreview = document.getElementById('reportPreview');
+const exportReportBtn = document.getElementById('exportReportBtn');
+
+const MAX_JD_FILE_BYTES = 200 * 1024; // 200 KB safeguard
+const MAX_JD_CHAR_LENGTH = 50000;
+const MAX_GUIDANCE_ENTRIES = 20;
 
 // Configuration
 const CONFIG = {
@@ -335,6 +350,10 @@ class SpeechLogger {
         this.sessionStartTime = null;
         this.micLogPath = null;
         this.speakerLogPath = null;
+        this.logStates = {
+            microphone: { path: null, part: 0, size: 0 },
+            speaker: { path: null, part: 0, size: 0 }
+        };
     }
 
     // Sanitize transcript content to prevent injection
@@ -342,51 +361,94 @@ class SpeechLogger {
         if (!transcript || typeof transcript !== 'string') return '';
 
         return transcript
-            .replace(/[\r\n]/g, ' ')  // Replace newlines with spaces
-            .replace(/[`|*_~<>]/g, '\\$&')  // Escape markdown special chars
+            .replace(/[\r\n]/g, ' ')
+            .replace(/[`|*_~<>]/g, '\$&')
             .trim()
-            .substring(0, 1000);  // Limit length
+            .substring(0, 1000);
+    }
+
+    _queueKey(type) {
+        return `${type}:${currentSessionId || 'inactive'}`;
+    }
+
+    _getState(type) {
+        return this.logStates[type];
+    }
+
+    _updateState(type, update) {
+        const state = this._getState(type);
+        if (!state) return;
+
+        if (Object.prototype.hasOwnProperty.call(update, 'path')) {
+            state.path = update.path;
+        }
+        if (Object.prototype.hasOwnProperty.call(update, 'part')) {
+            state.part = update.part;
+        }
+        if (Object.prototype.hasOwnProperty.call(update, 'size')) {
+            state.size = update.size;
+        }
+
+        if (type === 'microphone') {
+            this.micLogPath = state.path;
+        } else if (type === 'speaker') {
+            this.speakerLogPath = state.path;
+        }
+    }
+
+    _clearState(type) {
+        this._updateState(type, { path: null, part: 0, size: 0 });
     }
 
     async initializeSession() {
         try {
             this.sessionStartTime = new Date();
             currentSessionId = this.formatDateTime(this.sessionStartTime);
+            transcriptChunkSeq = 0;
 
-            // Ensure Logs directory exists
             const result = await window.electronAPI.ensureLogDirectory(this.logDirectory);
             if (!result.success) {
                 console.error('Failed to create logs directory:', result.error);
                 return false;
             }
 
-            // Create session-specific log files
-            this.micLogPath = `${this.logDirectory}/microphone_${currentSessionId}.md`;
-            this.speakerLogPath = `${this.logDirectory}/speaker_${currentSessionId}.md`;
-
-            // Initialize markdown files with headers
             const micHeader = this.createLogHeader('Microphone Transcription Log', this.sessionStartTime);
             const speakerHeader = this.createLogHeader('System Audio Transcription Log', this.sessionStartTime);
 
-            const writeResults = await Promise.all([
-                window.electronAPI.writeLogFile(this.micLogPath, micHeader),
-                window.electronAPI.writeLogFile(this.speakerLogPath, speakerHeader)
+            const [micResult, speakerResult] = await Promise.all([
+                window.electronAPI.createLog(currentSessionId, 'microphone', micHeader),
+                window.electronAPI.createLog(currentSessionId, 'speaker', speakerHeader)
             ]);
 
-            // Check if both writes succeeded
-            if (writeResults.every(result => result.success)) {
-                // Initialize buffers with the headers
-                micLogBuffer = micHeader;
-                speakerLogBuffer = speakerHeader;
+            if (!micResult.success || !speakerResult.success) {
+                console.error('Failed to initialize log streams', { mic: micResult, speaker: speakerResult });
 
-                console.log('Speech logging initialized for session:', currentSessionId);
-                return true;
-            } else {
-                console.error('Failed to initialize log files');
+                const abortFooter = `\n---\n\nSession aborted during initialization.\n`;
+                if (micResult.success) {
+                    await window.electronAPI.finalizeLog(currentSessionId, 'microphone', abortFooter);
+                }
+                if (speakerResult.success) {
+                    await window.electronAPI.finalizeLog(currentSessionId, 'speaker', abortFooter);
+                }
+
+                currentSessionId = null;
+                this.sessionStartTime = null;
+                this._clearState('microphone');
+                this._clearState('speaker');
+                setExportEnabled(false);
                 return false;
             }
+
+            this._updateState('microphone', micResult);
+            this._updateState('speaker', speakerResult);
+
+            console.log('Speech logging initialized for session:', currentSessionId);
+            setExportEnabled(true);
+            await refreshReasoningState();
+            return true;
         } catch (error) {
             console.error('Error initializing speech logger:', error);
+            setExportEnabled(false);
             return false;
         }
     }
@@ -413,57 +475,60 @@ class SpeechLogger {
             return;
         }
 
+        const state = this._getState(type);
+        if (!state || !state.path) {
+            console.warn(`No active ${type} log stream; skipping entry.`);
+            return;
+        }
+
         try {
-            const logPath = type === 'microphone' ? this.micLogPath : this.speakerLogPath;
-
-            // Sanitize the transcript to prevent injection
+            const rawTranscript = (transcript || '').toString().trim();
             const sanitizedTranscript = this.sanitizeTranscript(transcript);
-
             const timeStr = timestamp.toLocaleTimeString();
             const dateStr = timestamp.toLocaleDateString();
 
-            let logEntry = `## ${timeStr} - ${dateStr}\n\n`;
-            logEntry += `**Transcript:** ${sanitizedTranscript}\n\n`;
+            let logEntry = `## ${timeStr} - ${dateStr}
+
+`;
+            logEntry += `**Transcript:** ${sanitizedTranscript}
+
+`;
 
             if (latency) {
-                logEntry += `**Processing Latency:** ${latency}ms\n\n`;
+                logEntry += `**Processing Latency:** ${latency}ms
+
+`;
             }
 
-            logEntry += `---\n\n`;
+            logEntry += `---
 
-            // Use atomic write operation to prevent race conditions
-            await writeQueue.enqueue(logPath, async () => {
-                // Get current buffer content
-                const currentContent = type === 'microphone' ? micLogBuffer : speakerLogBuffer;
-                const updatedContent = currentContent + logEntry;
+`;
 
-                const result = await window.electronAPI.writeLogFile(logPath, updatedContent);
-
-                if (result.success) {
-                    // Update the appropriate buffer
-                    if (type === 'microphone') {
-                        micLogBuffer = updatedContent;
-                    } else {
-                        speakerLogBuffer = updatedContent;
-                    }
-                    return result;
-                } else {
-                    throw new Error(`Failed to write ${type} log: ${result.error}`);
+            await writeQueue.enqueue(this._queueKey(type), async () => {
+                const result = await window.electronAPI.appendLog(currentSessionId, type, logEntry);
+                if (!result.success) {
+                    throw new Error(`Failed to append ${type} log: ${result.error}`);
                 }
+
+                this._updateState(type, result);
+                if (result.rotated) {
+                    console.log(`${type} log rotated to ${result.path} (part ${result.part})`);
+                }
+
+                return result;
             });
+
+            if (rawTranscript) {
+                emitTranscriptChunk({
+                    type,
+                    transcript: rawTranscript,
+                    timestamp,
+                    latency,
+                });
+            }
 
         } catch (error) {
             console.error(`Error logging ${type} transcript:`, error);
-        }
-    }
-
-    async getCurrentLogContent(logPath) {
-        // For now, we'll manage content in memory to avoid read operations
-        // In a more complex implementation, we'd read from file
-        if (logPath === this.micLogPath) {
-            return micLogBuffer || this.createLogHeader('Microphone Transcription Log', this.sessionStartTime);
-        } else {
-            return speakerLogBuffer || this.createLogHeader('System Audio Transcription Log', this.sessionStartTime);
         }
     }
 
@@ -474,43 +539,40 @@ class SpeechLogger {
             const endTime = new Date();
             const sessionSummary = `\n---\n\n**Session End Time:** ${endTime.toLocaleString()}\n**Total Duration:** ${this.calculateDuration(this.sessionStartTime, endTime)}\n`;
 
-            // Add session summary to both files using atomic operations
-            const promises = [];
+            const tasks = [];
 
-            if (this.micLogPath) {
-                promises.push(writeQueue.enqueue(this.micLogPath, async () => {
-                    const micContent = micLogBuffer + sessionSummary;
-                    const result = await window.electronAPI.writeLogFile(this.micLogPath, micContent);
-                    if (result.success) {
-                        micLogBuffer = micContent;
-                    }
-                    return result;
-                }));
-            }
+            ['microphone', 'speaker'].forEach(type => {
+                const state = this._getState(type);
+                if (!state || !state.path) return;
 
-            if (this.speakerLogPath) {
-                promises.push(writeQueue.enqueue(this.speakerLogPath, async () => {
-                    const speakerContent = speakerLogBuffer + sessionSummary;
-                    const result = await window.electronAPI.writeLogFile(this.speakerLogPath, speakerContent);
-                    if (result.success) {
-                        speakerLogBuffer = speakerContent;
-                    }
-                    return result;
-                }));
-            }
+                tasks.push(
+                    writeQueue.enqueue(this._queueKey(type), async () => {
+                        const result = await window.electronAPI.finalizeLog(currentSessionId, type, sessionSummary);
+                        if (!result.success) {
+                            throw new Error(`Failed to finalize ${type} log: ${result.error}`);
+                        }
+                        this._clearState(type);
+                        return result;
+                    })
+                );
+            });
 
-            await Promise.all(promises);
+            await Promise.all(tasks);
 
             console.log('Speech logging session finalized:', currentSessionId);
-
-            // Reset session variables
-            currentSessionId = null;
-            micLogBuffer = '';
-            speakerLogBuffer = '';
-            this.sessionStartTime = null;
-
         } catch (error) {
             console.error('Error finalizing speech logging session:', error);
+        } finally {
+            currentSessionId = null;
+            this.sessionStartTime = null;
+            this._clearState('microphone');
+            this._clearState('speaker');
+            latestReasoning = null;
+            guidanceEntries = [];
+            renderGuidanceQueue();
+            renderReportPreview(null);
+            updateJDFitStatus(null);
+            setExportEnabled(false);
         }
     }
 
@@ -521,7 +583,6 @@ class SpeechLogger {
         return `${minutes}m ${seconds}s`;
     }
 }
-
 // Initialize speech logger
 const speechLogger = new SpeechLogger();
 
@@ -549,6 +610,317 @@ function updateStatus(streamType, isConnected) {
     } else {
         statusElement.textContent = `${label}: Disconnected`;
         statusElement.className = 'status disconnected';
+    }
+}
+
+let jdLoading = false;
+
+function syncJDButtons() {
+    if (!jdLoadBtn) return;
+    jdLoadBtn.disabled = jdLoading;
+    jdPasteBtn.disabled = jdLoading;
+    jdClearBtn.disabled = jdLoading || !activeJD;
+}
+
+function renderJDPreview(jdData) {
+    if (!jdPreview) return;
+
+    if (!jdData) {
+        jdPreview.textContent = 'No job description loaded.';
+        updateJDFitStatus(null);
+        renderGuidanceQueue();
+        renderReportPreview(null);
+        return;
+    }
+
+    const requirementCount = Array.isArray(jdData.requirements) ? jdData.requirements.length : 0;
+    const sourceLabel = jdData.source?.name || jdData.source?.type || jdData.jdId;
+    const header = `Source: ${sourceLabel || 'Unknown'}\nUpdated: ${jdData.updatedAt || jdData.createdAt}`;
+    const snippet = jdData.text
+        ? jdData.text.trim().split('\n').slice(0, 30).join('\n')
+        : jdData.snippet || '';
+
+    jdPreview.textContent = `${header}\nRequirements: ${requirementCount}\n\n${snippet}`;
+}
+
+async function refreshJDFromMain() {
+    try {
+        const result = await window.electronAPI.getActiveJD();
+        if (result.success && result.data) {
+            activeJD = result.data;
+        } else {
+            activeJD = null;
+        }
+    } catch (error) {
+        console.error('Failed to fetch active JD:', error);
+        activeJD = null;
+    }
+
+    renderJDPreview(activeJD);
+    syncJDButtons();
+    await refreshReasoningState();
+}
+
+async function submitJDText(text, source) {
+    if (!text || !text.trim()) {
+        alert('Job description is empty.');
+        return;
+    }
+
+    if (text.length > MAX_JD_CHAR_LENGTH) {
+        alert(`Job description is too long (>${MAX_JD_CHAR_LENGTH} characters). Please trim it before uploading.`);
+        return;
+    }
+
+    try {
+        jdLoading = true;
+        syncJDButtons();
+        const response = await window.electronAPI.setJDText(text, { source });
+        if (!response.success) {
+            throw new Error(response.error || 'Unknown JD save error');
+        }
+        activeJD = response.data;
+        renderJDPreview(activeJD);
+        await refreshReasoningState();
+        alert('Job description loaded successfully.');
+    } catch (error) {
+        console.error('Failed to store JD:', error);
+        alert(`Failed to load job description: ${error.message}`);
+    } finally {
+        jdLoading = false;
+        syncJDButtons();
+    }
+}
+
+function setupJDControls() {
+    if (!jdLoadBtn) return;
+
+    jdLoadBtn.addEventListener('click', () => {
+        if (jdLoading) return;
+        jdFileInput.value = '';
+        jdFileInput.click();
+    });
+
+    jdFileInput.addEventListener('change', async (event) => {
+        const file = event.target.files?.[0];
+        if (!file) return;
+        if (file.size > MAX_JD_FILE_BYTES) {
+            alert('Selected file is too large. Please choose a file under 200KB.');
+            jdFileInput.value = '';
+            return;
+        }
+
+        try {
+            const text = await file.text();
+            await submitJDText(text, { type: 'file', name: file.name });
+        } finally {
+            jdFileInput.value = '';
+        }
+    });
+
+    jdPasteBtn.addEventListener('click', async () => {
+        if (jdLoading) return;
+        const pasted = prompt('Paste the Job Description text below:');
+        if (!pasted) return;
+        await submitJDText(pasted, { type: 'paste', name: 'Clipboard' });
+    });
+
+    jdClearBtn.addEventListener('click', async () => {
+        if (jdLoading || !activeJD) return;
+        const confirmed = confirm('Clear the active Job Description?');
+        if (!confirmed) return;
+        try {
+            jdLoading = true;
+            syncJDButtons();
+            const result = await window.electronAPI.clearJD();
+            if (!result.success) {
+                throw new Error(result.error || 'Unknown clear error');
+            }
+            activeJD = null;
+            renderJDPreview(activeJD);
+            latestReasoning = null;
+            guidanceEntries = [];
+            renderGuidanceQueue();
+            renderReportPreview(null);
+            updateJDFitStatus(null);
+            setExportEnabled(false);
+        } catch (error) {
+            console.error('Failed to clear JD:', error);
+            alert(`Failed to clear JD: ${error.message}`);
+        } finally {
+            jdLoading = false;
+            syncJDButtons();
+        }
+    });
+
+    if (exportReportBtn) {
+        exportReportBtn.addEventListener('click', async () => {
+            if (!currentSessionId) {
+                alert('Start a session before exporting the report.');
+                return;
+            }
+            try {
+                const response = await window.electronAPI.exportReport(currentSessionId);
+                if (response.success) {
+                    alert(`Report exported to ${response.data.path}`);
+                } else {
+                    alert(`Failed to export report: ${response.error}`);
+                }
+            } catch (error) {
+                console.error('Failed to export report:', error);
+                alert(`Failed to export report: ${error.message}`);
+            }
+        });
+    }
+}
+
+function updateJDFitStatus(overallFit) {
+    if (!jdFitStatus) return;
+    const value = typeof overallFit === 'number' ? `${overallFit}%` : 'N/A';
+    jdFitStatus.textContent = `JD Fit: ${value}`;
+    if (typeof overallFit === 'number') {
+        if (overallFit >= 70) {
+            jdFitStatus.className = 'status connected';
+        } else if (overallFit >= 40) {
+            jdFitStatus.className = 'status warning';
+        } else {
+            jdFitStatus.className = 'status disconnected';
+        }
+    } else {
+        jdFitStatus.className = 'status disconnected';
+    }
+}
+
+function setExportEnabled(enabled) {
+    if (!exportReportBtn) return;
+    exportReportBtn.disabled = !enabled;
+}
+
+function renderReportPreview(reasoning) {
+    if (!reportPreview) return;
+    if (!reasoning || !reasoning.requirements || !Object.keys(reasoning.requirements).length) {
+        reportPreview.textContent = 'Report will appear after the session starts.';
+        return;
+    }
+
+    const lines = [];
+    lines.push(`Session: ${reasoning.sessionId}`);
+    lines.push(`Overall Fit: ${reasoning.overallFit ?? 'N/A'}%`);
+    lines.push(`Updated: ${reasoning.updatedAt}`);
+    lines.push('');
+    for (const req of Object.values(reasoning.requirements)) {
+        lines.push(`- [${req.verdict?.toUpperCase() || 'UNKNOWN'}] ${req.title || req.id} — ${req.confidence ?? 0}%`);
+        if (req.reasoning) {
+            lines.push(`  ${req.reasoning}`);
+        }
+        if (req.followUpQuestion) {
+            lines.push(`  Follow-up: ${req.followUpQuestion}`);
+        }
+    }
+    reportPreview.textContent = lines.join('\n');
+}
+
+function renderGuidanceQueue() {
+    if (!guidanceQueue) return;
+    if (!guidanceEntries.length) {
+        guidanceQueue.textContent = 'No guidance prompts.';
+        return;
+    }
+    const lines = guidanceEntries.map((entry, index) => {
+        const prefix = `${index + 1}. [${entry.priority.toUpperCase()}] ${entry.requirementTitle || entry.requirementId}`;
+        const question = entry.question ? ` → ${entry.question}` : '';
+        return `${prefix}${question}\n   (${entry.createdAt})`;
+    });
+    guidanceQueue.textContent = lines.join('\n');
+}
+
+function emitTranscriptChunk({ type, transcript, timestamp, latency }) {
+    if (!currentSessionId || !transcript) return;
+    const payload = {
+        chunkId: `chunk-${++transcriptChunkSeq}`,
+        sessionId: currentSessionId,
+        source: type,
+        text: transcript,
+        timestamp: timestamp instanceof Date ? timestamp.toISOString() : new Date().toISOString(),
+        latency: typeof latency === 'number' ? latency : null,
+    };
+    try {
+        window.electronAPI.emitTranscriptChunk?.(payload);
+    } catch (error) {
+        console.error('Failed to emit transcript chunk:', error);
+    }
+}
+
+const evidenceListeners = [];
+
+function convertReasoningPayload(payload) {
+    if (!payload) return null;
+    const mapped = {
+        sessionId: payload.sessionId,
+        revision: payload.revision,
+        updatedAt: payload.updatedAt,
+        overallFit: payload.overallFit,
+        requirements: {},
+    };
+    if (Array.isArray(payload.requirements)) {
+        payload.requirements.forEach((item) => {
+            mapped.requirements[item.id] = item;
+        });
+    }
+    return mapped;
+}
+
+async function refreshReasoningState() {
+    if (!currentSessionId) {
+        latestReasoning = null;
+        renderReportPreview(null);
+        updateJDFitStatus(null);
+        return;
+    }
+    try {
+        const response = await window.electronAPI.getReasoningState(currentSessionId);
+        if (response.success) {
+            latestReasoning = response.data;
+            updateJDFitStatus(latestReasoning?.overallFit);
+            renderReportPreview(latestReasoning);
+        }
+    } catch (error) {
+        console.error('Failed to load reasoning state:', error);
+    }
+}
+
+function setupEvidenceListeners() {
+    if (window.electronAPI.onEvidenceUpdated) {
+        const detach = window.electronAPI.onEvidenceUpdated((payload) => {
+            console.log('Evidence updated:', payload);
+        });
+        evidenceListeners.push(detach);
+    }
+    if (window.electronAPI.onJDEvidenceUpdated) {
+        const detach = window.electronAPI.onJDEvidenceUpdated((payload) => {
+            console.log('JD evidence context updated:', payload);
+        });
+        evidenceListeners.push(detach);
+    }
+    if (window.electronAPI.onReasoningUpdate) {
+        const detach = window.electronAPI.onReasoningUpdate((payload) => {
+            console.log('Reasoning update:', payload);
+            latestReasoning = payload;
+            updateJDFitStatus(payload.overallFit);
+            renderReportPreview(convertReasoningPayload(payload));
+        });
+        evidenceListeners.push(detach);
+    }
+    if (window.electronAPI.onGuidancePrompt) {
+        const detach = window.electronAPI.onGuidancePrompt((payload) => {
+            console.log('Guidance prompt:', payload);
+            guidanceEntries.unshift(payload);
+            if (guidanceEntries.length > MAX_GUIDANCE_ENTRIES) {
+                guidanceEntries.pop();
+            }
+            renderGuidanceQueue();
+        });
+        evidenceListeners.push(detach);
     }
 }
 
@@ -830,9 +1202,20 @@ async function toggleRecording() {
 startBtn.addEventListener('click', start);
 stopBtn.addEventListener('click', stop);
 recordBtn.addEventListener('click', toggleRecording);
+setupJDControls();
+refreshJDFromMain();
+setupEvidenceListeners();
 updateMicSelect();
+setExportEnabled(false);
 
 // Cleanup on page unload
 window.addEventListener('beforeunload', async () => {
     await stop();
+    evidenceListeners.forEach((detach) => {
+        try {
+            detach?.();
+        } catch (error) {
+            console.error('Failed to detach evidence listener:', error);
+        }
+    });
 });
