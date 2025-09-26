@@ -22,3 +22,8 @@
 - Issue: heuristic fallback batches were overwriting Claude-issued scores, dropping `overallFit` back to 0 even after strong positive signals (see `JobData/v2/sessions/*/events.ndjson`).
 - Decision: treat Claude responses as authoritative, mark group state with a source flag, and limit heuristics to additive blending so JD Fit evolves instead of hard resetting.
 - Plan: (1) add lightweight verdict-strength mapping + confidence blending, (2) let heuristics seed only unknown groups or nudge existing heuristic estimates, (3) update docs + UI flow once confident in the new smoothing behaviour.
+
+## 2025-09-26T11:20:00Z — Claude-owned scoring
+- Removed local scoring/heuristics entirely; Claude now returns the full state (`overallFit`, group verdicts, guidance, conflicts).
+- Orchestrator simply forwards transcript batches, persists Claude’s JSON, and broadcasts it to the UI/export pipeline.
+- Updated prompt to enforce depth requirements and JSON schema; runtime docs refreshed accordingly.

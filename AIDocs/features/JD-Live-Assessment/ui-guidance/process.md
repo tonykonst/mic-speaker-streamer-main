@@ -32,5 +32,5 @@
 - Follow-up: keep an eye on guidance cues; if heuristic-only sessions feel sluggish, consider lightweight UI hint that scores are provisional.
 
 ## 2025-09-26T10:45:00Z — Guidance dedupe
-- Repeated follow-up prompts from the orchestrator flooded the queue with identical questions.
-- Added per-requirement prompt history in the orchestrator so we emit only when the suggested question actually changes, keeping the queue readable.
+- Reworked guidance handling after moving scoring to Claude: prompts now come directly from the model.
+- The orchestrator forwards whatever Claude returns; duplicates are mitigated with prompt instructions instead of local history.

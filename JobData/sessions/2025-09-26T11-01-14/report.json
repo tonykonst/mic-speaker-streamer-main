@@ -1,7 +1,7 @@
 {
   "sessionId": "2025-09-26T11-01-14",
   "overallFit": 88,
-  "updatedAt": "2025-09-26T11:03:27.596Z",
+  "updatedAt": "2025-09-26T11:03:32.963Z",
   "requirements": {
     "1": {
       "id": 1,
@@ -41,7 +41,7 @@
       "followUpQuestion": "Walk me through the end-to-end flow of the most complex full-stack JavaScript app you've built.",
       "notableQuotes": [],
       "conflicts": [],
-      "lastUpdated": "2025-09-26T11:03:27.596Z"
+      "lastUpdated": "2025-09-26T11:03:32.963Z"
     },
     {
       "id": 2,
@@ -52,7 +52,7 @@
       "followUpQuestion": "What's your approach to keeping project stakeholders informed?",
       "notableQuotes": [],
       "conflicts": [],
-      "lastUpdated": "2025-09-26T11:03:27.596Z"
+      "lastUpdated": "2025-09-26T11:03:32.963Z"
     },
     {
       "id": 3,
@@ -63,7 +63,7 @@
       "followUpQuestion": "What HR tech integrations have you built in the past?",
       "notableQuotes": [],
       "conflicts": [],
-      "lastUpdated": "2025-09-26T11:03:27.596Z"
+      "lastUpdated": "2025-09-26T11:03:32.963Z"
     }
   ]
 }

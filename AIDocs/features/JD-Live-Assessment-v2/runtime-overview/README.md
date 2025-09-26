@@ -13,18 +13,15 @@
   - Successful Claude responses go through `_mergeGroup` → `_applyResult`, updating `state.json`, emitting `update`, guidance prompts, and conflict events.
   - Failures fall back to `_applyHeuristicEvaluation`, which now only seeds or nudges groups that lack authoritative data.
 
-## JD Fit Smoothing
-- Each plan group is initialised with `verdict: unknown`, `confidence: 0`, `source: null`.
-- `_mergeGroup` tags the source (`claude` or `heuristic`) and blends scores:
-  - **Claude** overrides verdict/confidence and sets `source: claude`.
-  - **Heuristic** can only seed empty groups or gently push existing heuristic estimates.
-  - Confidence blending ensures increases move toward the new value (≤ 60 % retained) while decreases step down with damping.
-- `overallFit` is a weighted mean (must‑have × 1.5, nice‑to‑have × 1). With smoothing, one strong signal keeps its weight while missing groups stay neutral instead of resetting everything to 0.
+## JD Fit Ownership
+- Claude now returns the complete state (`overallFit`, group verdicts, guidance, conflicts). System prompt lives in `src/prompts/evaluationSystemPrompt.txt` so we can iterate on instructions without touching code.
+- The orchestrator simply persists the response and forwards updates; no local averaging or heuristics remain.
+- `overallFit` comes straight from Claude, so tuning happens in the prompt rather than code.
 
-## Guidance Prompt Dedupe
-- `session.guidanceHistory` stores the last question per requirement.
-- When `_applyResult` sets `followUpQuestion`, we emit a `guidance` event only if the text changed; clearing questions removes the history entry.
-- Renderer receives unique prompts (keeps max 20 entries) and simply prepends them to the queue.
+## Guidance Prompts
+- Claude is responsible for nominating follow-ups (`guidance` array) or inline `followUpQuestion` values.
+- The orchestrator emits a `guidance-reset` event each time, replacing the entire queue in the renderer so resolved questions disappear automatically.
+- UI still keeps a rolling window of the latest 20 prompts for operator focus.
 
 ## Persistence Artifacts
 - **`JobData/v2/jd/<jdId>/evaluation_plan.json`** — Claude-generated rubric (groups, weights, probing questions).
@@ -33,10 +30,10 @@
 - **`JobData/v2/sessions/<sessionId>/conflicts.ndjson`** — structured conflict cards emitted during `_applyResult`.
 
 ## Renderer Integration
-- `onReasoningUpdate` normalises state (`normalizeReasoningState`) and refreshes JD Fit badge, group cards, report preview.
-- `onGuidancePrompt` updates the queue; duplicates are avoided thanks to orchestrator history.
-- Report/export uses the same state snapshot, so smoothing logic automatically propagates.
+- `onReasoningUpdate` normalises state (`normalizeReasoningState`) and refreshes JD Fit badge, group cards, report preview based on Claude’s state.
+- `onGuidancePrompt` simply enqueues whatever Claude returned (priority/defaults handled by prompt design).
+- Report/export uses the persisted state verbatim, keeping parity with Claude’s judgments.
 
 ## Operational Notes
-- **Claude timeouts** still trigger heuristics; monitor main-process console (`[eval-orchestrator] Claude evaluation failed ...`).
-- If JD Fit feels sticky, check `events.ndjson` to confirm whether heuristics or Claude is driving recent updates.
+- **Claude failures** now result in “stale” state (no update written). Monitor `[eval-orchestrator] Claude evaluation failed ...` and consider retries/backoff if needed.
+- Roadmap: feed prompt improvements through `JD-Live-Assessment-v3/plan.md` to tighten consistency and depth.

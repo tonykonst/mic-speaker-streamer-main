@@ -1435,8 +1435,8 @@ if (useClaudeCoach && evaluationOrchestrator) {
     void reportManager.handleReasoningUpdate(payload);
   });
 
-  evaluationOrchestrator.on('guidance', (payload) => {
-    broadcast('guidance-prompt', payload);
+  evaluationOrchestrator.on('guidance-reset', (payload) => {
+    broadcast('guidance-reset', payload);
   });
 
   evaluationOrchestrator.on('conflict', (payload) => {

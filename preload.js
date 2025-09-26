@@ -34,6 +34,11 @@ contextBridge.exposeInMainWorld('electronAPI', {
     ipcRenderer.on('guidance-prompt', listener);
     return () => ipcRenderer.removeListener('guidance-prompt', listener);
   },
+  onGuidanceReset: (handler) => {
+    const listener = (_event, data) => handler?.(data);
+    ipcRenderer.on('guidance-reset', listener);
+    return () => ipcRenderer.removeListener('guidance-reset', listener);
+  },
   onJDEvaluationPlan: (handler) => {
     const listener = (_event, data) => handler?.(data);
     ipcRenderer.on('jd-evaluation-plan', listener);

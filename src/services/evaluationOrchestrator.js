@@ -2,12 +2,13 @@ const { EventEmitter } = require('node:events');
 const path = require('node:path');
 const fs = require('node:fs');
 
+const SYSTEM_PROMPT = fs.readFileSync(
+  path.join(__dirname, '..', 'prompts', 'evaluationSystemPrompt.txt'),
+  'utf8'
+);
+
 const DEFAULT_BATCH_WINDOW_MS = 5000;
 const DEFAULT_CONTEXT_WINDOW = 20;
-const STOP_WORDS = new Set([
-  'the','and','a','an','or','of','in','on','for','to','with','we','our','their','that','this','these','those','by','from','at','as','be','is','are','was','were','will','can','may','might','should','could','have','has','had','into','about','across','within','without','over','under','after','before','while','when','where','who','whom','which','what','why','how','i','me','my','you','your','they','them','it','its','us'
-]);
-
 class ClaudeEvaluationOrchestrator extends EventEmitter {
   constructor({ claudeClient, rootDir, model, logger = console, batchWindowMs = DEFAULT_BATCH_WINDOW_MS }) {
     super();
@@ -19,7 +20,6 @@ class ClaudeEvaluationOrchestrator extends EventEmitter {
     this.sessions = new Map();
     this.contextWindow = DEFAULT_CONTEXT_WINDOW;
     this.activePlan = null;
-    this.planMeta = new Map();
   }
 
   get isEnabled() {
@@ -32,13 +32,10 @@ class ClaudeEvaluationOrchestrator extends EventEmitter {
 
   setActivePlan(plan) {
     this.activePlan = plan || null;
-    this.planMeta = this._preparePlan(plan);
     for (const session of this.sessions.values()) {
       session.evaluationPlan = this.activePlan;
       session.state.planVersion = this.activePlan?.generatedAt || null;
       session.state.groups = this._initialGroupState(this.activePlan);
-      session.planMeta = this.planMeta;
-      session.guidanceHistory = new Map();
       this._persistState(session).catch((error) => {
         this.logger.error('[eval-orchestrator] failed to persist plan update', error);
       });
@@ -100,14 +97,12 @@ class ClaudeEvaluationOrchestrator extends EventEmitter {
       sessionId,
       dir,
       evaluationPlan: null,
-      planMeta: new Map(),
       queue: [],
       context: [],
       timer: null,
       statePath: path.join(dir, 'state.json'),
       eventsPath: path.join(dir, 'events.ndjson'),
       conflictsPath: path.join(dir, 'conflicts.ndjson'),
-      guidanceHistory: new Map(),
       state: {
         sessionId,
         updatedAt: null,
@@ -125,7 +120,6 @@ class ClaudeEvaluationOrchestrator extends EventEmitter {
     if (!session.evaluationPlan && this.activePlan) {
       session.evaluationPlan = this.activePlan;
       session.state.planVersion = this.activePlan.generatedAt || null;
-      session.planMeta = this.planMeta;
       if (!existingState || !existingState.groups || !Object.keys(existingState.groups).length) {
         session.state.groups = this._initialGroupState(this.activePlan);
       }
@@ -179,15 +173,13 @@ class ClaudeEvaluationOrchestrator extends EventEmitter {
     try {
       const response = await this.claudeClient.sendMessages(prompt);
       const parsed = this._extractJson(response);
-      if (!parsed?.groups) {
+      if (!parsed) {
         this.logger.warn('[eval-orchestrator] Empty response', session.sessionId);
-        await this._applyHeuristicEvaluation(session, batch, { reason: 'empty-response' });
         return;
       }
-      await this._applyResult(session, parsed, batch, { source: 'claude' });
+      await this._applyClaudeState(session, parsed, batch);
     } catch (error) {
       this.logger.error('[eval-orchestrator] Claude evaluation failed', error);
-      await this._applyHeuristicEvaluation(session, batch, { error });
     }
   }
 
@@ -202,9 +194,92 @@ class ClaudeEvaluationOrchestrator extends EventEmitter {
 
     return {
       model: this.model,
-      system:
-        'You are a hiring copilot evaluating a candidate live based on grouped requirements. Return strict minified JSON with groups[]. Each group entry must include groupId, verdict, confidence (0-100), rationale, optional followUpQuestions[], notableQuotes[], conflicts[]. Return JSON only.',
-      maxTokens: 800,
+      system: SYSTEM_PROMPT,
+      maxTokens: 1000,
+      response_format: {
+        type: 'json_schema',
+        json_schema: {
+          name: 'evaluation_state',
+          schema: {
+            type: 'object',
+            properties: {
+              overallFit: { type: 'number', minimum: 0, maximum: 100 },
+              groups: {
+                type: 'array',
+                minItems: 1,
+                items: {
+                  type: 'object',
+                  properties: {
+                    id: { type: 'string' },
+                    title: { type: 'string' },
+                    verdict: { type: 'string' },
+                    confidence: { type: 'number', minimum: 0, maximum: 100 },
+                    rationale: { type: 'string' },
+                    followUpQuestion: { type: ['string', 'null'] },
+                    notableQuotes: {
+                      type: 'array',
+                      items: { type: 'string' },
+                    },
+                    conflicts: {
+                      type: 'array',
+                      items: {
+                        type: 'object',
+                        properties: {
+                          summary: { type: 'string' },
+                          evidence: {
+                            type: 'array',
+                            items: {
+                              type: 'object',
+                              properties: {
+                                quote: { type: 'string' },
+                                timestamp: { type: ['string', 'null'] },
+                              },
+                              required: ['quote'],
+                            },
+                          },
+                          recommendedAction: { type: ['string', 'null'] },
+                        },
+                        required: ['summary'],
+                      },
+                    },
+                  },
+                  required: ['id', 'verdict', 'confidence', 'rationale'],
+                },
+              },
+              guidance: {
+                type: 'array',
+                items: {
+                  type: 'object',
+                  properties: {
+                    groupId: { type: ['string', 'null'] },
+                    question: { type: 'string' },
+                    priority: { type: 'string' },
+                    mustHave: { type: ['boolean', 'null'] },
+                  },
+                  required: ['question'],
+                },
+              },
+              conflicts: {
+                type: 'array',
+                items: {
+                  type: 'object',
+                  properties: {
+                    groupId: { type: ['string', 'null'] },
+                    summary: { type: 'string' },
+                    evidence: {
+                      type: 'array',
+                      items: { type: 'string' },
+                    },
+                    recommendedAction: { type: ['string', 'null'] },
+                  },
+                  required: ['groupId', 'summary'],
+                },
+              },
+            },
+            required: ['overallFit', 'groups'],
+          },
+        },
+      },
       messages: [
         {
           role: 'user',
@@ -236,346 +311,164 @@ class ClaudeEvaluationOrchestrator extends EventEmitter {
     return null;
   }
 
-  async _applyResult(session, result, batch, { source = 'claude', skipEvent = false } = {}) {
-    const groups = Array.isArray(result.groups) ? result.groups : [];
-    if (!groups.length) return;
-
+  async _applyClaudeState(session, result, batch) {
     const nowIso = new Date().toISOString();
 
-    if (!skipEvent) {
-      const eventRecord = {
-        at: nowIso,
-        source,
-        groups,
-        batch,
-      };
-      await appendJsonLine(session.eventsPath, eventRecord);
+    const eventRecord = {
+      at: nowIso,
+      source: 'claude',
+      result,
+      batch,
+    };
+    await appendJsonLine(session.eventsPath, eventRecord);
+
+    const groupsArray = Array.isArray(result.groups)
+      ? result.groups
+      : result.groups && typeof result.groups === 'object'
+        ? Object.values(result.groups)
+        : [];
+
+    const rawConfidences = groupsArray
+      .map((group) => Number(group?.confidence ?? 0))
+      .filter((value) => Number.isFinite(value));
+
+    const usesFractionalScale = rawConfidences.some((value) => value > 0 && value < 1);
+    const usesFivePointScale = !usesFractionalScale && rawConfidences.length > 0 && Math.max(...rawConfidences) <= 5;
+
+    const normalizeConfidence = (value, verdict) => {
+      let num = Number(value);
+      if (!Number.isFinite(num)) {
+        num = 0;
+      }
+      if (usesFractionalScale) {
+        num *= 100;
+      } else if (usesFivePointScale) {
+        if (num <= 1 && (!verdict || verdict.toLowerCase() === 'unknown')) {
+          num = 0;
+        } else {
+          num = Math.max(0, Math.min(5, num)) * 20;
+        }
+      }
+      return this._normalizeFit(num);
+    };
+
+    let overallFitValue = Number(result.overallFit);
+    if (!Number.isFinite(overallFitValue)) {
+      overallFitValue = 0;
     }
+    if (usesFractionalScale && overallFitValue > 0 && overallFitValue <= 1) {
+      overallFitValue *= 100;
+    } else if (usesFivePointScale && overallFitValue > 0 && overallFitValue <= 5) {
+      overallFitValue *= 20;
+    }
+    const overallFit = this._normalizeFit(overallFitValue);
 
-    let totalConfidence = 0;
-    let totalWeight = 0;
-
-    for (const update of groups) {
-      const existing = session.state.groups[update.groupId] || {
-        id: update.groupId,
-        title: update.groupId,
-        verdict: 'unknown',
-        confidence: 0,
-        rationale: null,
-        followUpQuestion: null,
-        notableQuotes: [],
-        conflicts: [],
-        source: null,
-      };
-
-      const merged = this._mergeGroup(existing, update, { source });
-      if (!merged) {
+    const groupsMap = {};
+    for (const group of groupsArray) {
+      if (!group?.id) {
         continue;
       }
-
-      merged.lastUpdated = nowIso;
-      merged.source = merged.source || source;
-
-      session.state.groups[update.groupId] = merged;
-
-      const importance = this._groupImportance(session, update.groupId) === 'must-have' ? 1.5 : 1;
-      totalConfidence += merged.confidence * importance;
-      totalWeight += importance;
-
-      if (merged.conflicts.length) {
-        for (const conflict of merged.conflicts) {
-          const record = {
-            at: nowIso,
-            sessionId: session.sessionId,
-            groupId: update.groupId,
-            summary: conflict.summary,
-            evidence: conflict.evidence,
-            recommendedAction: conflict.recommendedAction,
-          };
-          await appendJsonLine(session.conflictsPath, record);
-          this.emit('conflict', record);
-        }
-      }
-
-      if (merged.followUpQuestion) {
-        const tracker = session.guidanceHistory || (session.guidanceHistory = new Map());
-        const previous = tracker.get(update.groupId);
-        if (!previous || previous.question !== merged.followUpQuestion) {
-          tracker.set(update.groupId, { question: merged.followUpQuestion, issuedAt: nowIso });
-          this.emit('guidance', {
-            sessionId: session.sessionId,
-            requirementId: update.groupId,
-            requirementTitle: merged.title,
-            question: merged.followUpQuestion,
-            priority: this._groupImportance(session, update.groupId) === 'must-have' ? 'high' : 'medium',
-            mustHave: this._groupImportance(session, update.groupId) === 'must-have',
-            createdAt: nowIso,
-          });
-        }
-      } else if (session.guidanceHistory) {
-        session.guidanceHistory.delete(update.groupId);
-      }
+      groupsMap[group.id] = {
+        id: group.id,
+        title: group.title || this._lookupGroupTitle(session, group.id),
+        verdict: group.verdict || 'unknown',
+        confidence: normalizeConfidence(group.confidence ?? 0, group.verdict || ''),
+        rationale: group.rationale || null,
+        followUpQuestion: group.followUpQuestion || null,
+        notableQuotes: Array.isArray(group.notableQuotes) ? group.notableQuotes.slice(0, 5) : [],
+        conflicts: Array.isArray(group.conflicts) ? group.conflicts : [],
+        lastUpdated: nowIso,
+      };
     }
 
-    session.state.updatedAt = nowIso;
-    session.state.overallFit = totalWeight ? Math.round(totalConfidence / totalWeight) : 0;
+    session.state = {
+      sessionId: session.sessionId,
+      updatedAt: nowIso,
+      overallFit,
+      planVersion: session.evaluationPlan?.generatedAt || session.state.planVersion || null,
+      groups: groupsMap,
+    };
 
     await this._persistState(session);
+
     this.emit('update', {
       sessionId: session.sessionId,
       updatedAt: nowIso,
-      overallFit: session.state.overallFit,
-      groups: Object.values(session.state.groups),
+      overallFit,
+      groups: Object.values(groupsMap),
     });
-  }
 
-  _mergeGroup(existing, update, { source }) {
-    const merged = { ...existing };
-    const prevSource = existing.source;
-    if (source === 'heuristic' && prevSource && prevSource !== 'heuristic') {
-      // Authoritative verdict already present; do not overwrite with heuristic guess.
-      return null;
-    }
+    const guidanceSource = Array.isArray(result.guidance)
+      ? result.guidance
+      : Object.values(groupsMap)
+          .filter((group) => Boolean(group.followUpQuestion))
+          .map((group) => ({
+            groupId: group.id,
+            question: group.followUpQuestion,
+            priority: this._groupImportance(session, group.id) === 'must-have' ? 'high' : 'medium',
+            mustHave: this._groupImportance(session, group.id) === 'must-have',
+            groupTitle: group.title,
+          }));
 
-    const incomingVerdict = (update.verdict || merged.verdict || 'unknown').toLowerCase();
-    const incomingConfidence = this._clampConfidence(update.confidence ?? merged.confidence ?? 0);
-    const prevStrength = this._verdictStrength(merged.verdict);
-    const incomingStrength = this._verdictStrength(incomingVerdict);
-
-    if (source === 'heuristic') {
-      if (!merged.source) {
-        // No prior signal — treat heuristic as the seed value.
-        merged.verdict = incomingVerdict;
-        merged.confidence = incomingConfidence;
-        merged.source = 'heuristic';
-      } else {
-        const trend = incomingStrength > prevStrength
-          ? 'increase'
-          : incomingStrength < prevStrength
-            ? 'decrease'
-            : incomingConfidence > merged.confidence
-              ? 'increase'
-              : incomingConfidence < merged.confidence
-                ? 'decrease'
-                : 'neutral';
-
-        if (trend === 'increase') {
-          merged.verdict = incomingStrength >= prevStrength ? incomingVerdict : merged.verdict;
-        } else if (trend === 'decrease') {
-          merged.verdict = incomingVerdict;
-        }
-
-        if (trend !== 'neutral') {
-          merged.confidence = this._blendConfidence(merged.confidence, incomingConfidence, trend);
-        }
-      }
-      if (!merged.rationale && update.rationale) {
-        merged.rationale = update.rationale;
-      }
-    } else {
-      merged.verdict = incomingVerdict;
-      merged.confidence = incomingConfidence;
-      merged.rationale = update.rationale || merged.rationale;
-      merged.source = 'claude';
-    }
-
-    const nextQuestion = Array.isArray(update.followUpQuestions) && update.followUpQuestions.length
-      ? update.followUpQuestions[0]
-      : null;
-    if (nextQuestion) {
-      merged.followUpQuestion = nextQuestion;
-    }
-
-    if (Array.isArray(update.notableQuotes) && update.notableQuotes.length) {
-      const deduped = new Set([...(merged.notableQuotes || []), ...update.notableQuotes]);
-      merged.notableQuotes = Array.from(deduped).slice(0, 5);
-    }
-
-    if (Array.isArray(update.conflicts)) {
-      merged.conflicts = update.conflicts.map((conflict) => ({
-        summary: conflict.summary,
-        evidence: conflict.evidence || [],
-        recommendedAction: conflict.recommendedAction || null,
+    const guidanceEntries = guidanceSource
+      .filter((item) => Boolean(item?.question))
+      .map((item) => ({
+        sessionId: session.sessionId,
+        requirementId: item.groupId || null,
+        requirementTitle: item.groupTitle || (item.groupId ? this._lookupGroupTitle(session, item.groupId) : null),
+        question: item.question,
+        priority: item.priority || 'medium',
+        mustHave: typeof item.mustHave === 'boolean'
+          ? item.mustHave
+          : (item.groupId ? this._groupImportance(session, item.groupId) === 'must-have' : false),
+        createdAt: nowIso,
       }));
-    }
 
-    return merged;
+    this.emit('guidance-reset', {
+      sessionId: session.sessionId,
+      updatedAt: nowIso,
+      entries: guidanceEntries,
+    });
+
+    if (Array.isArray(result.conflicts)) {
+      for (const conflict of result.conflicts) {
+        if (!conflict?.groupId) continue;
+        const record = {
+          at: nowIso,
+          sessionId: session.sessionId,
+          groupId: conflict.groupId,
+          summary: conflict.summary,
+          evidence: conflict.evidence || [],
+          recommendedAction: conflict.recommendedAction || null,
+        };
+        await appendJsonLine(session.conflictsPath, record);
+        this.emit('conflict', record);
+      }
+    }
   }
 
-  _clampConfidence(value) {
+  _normalizeFit(value) {
     const num = Number(value);
-    if (!Number.isFinite(num) || num < 0) return 0;
-    if (num > 100) return 100;
-    return Math.round(num);
+    if (!Number.isFinite(num)) return 0;
+    return Math.max(0, Math.min(100, Math.round(num)));
   }
 
-  _blendConfidence(previous, incoming, trend) {
-    if (!Number.isFinite(previous)) {
-      return incoming;
-    }
-    const applyRatio = trend === 'increase' ? 0.6 : 0.7;
-    let result;
-    if (trend === 'increase') {
-      result = previous + (incoming - previous) * applyRatio;
-      if (result < previous) {
-        result = previous + Math.abs(incoming - previous) * 0.2;
-      }
-      result = Math.max(result, previous);
-    } else {
-      result = previous - (previous - incoming) * applyRatio;
-      if (result > previous) {
-        result = previous - Math.abs(incoming - previous) * 0.2;
-      }
-      result = Math.min(result, previous);
-    }
-    return this._clampConfidence(result);
-  }
-
-  _verdictStrength(verdict) {
-    if (!verdict) return 0;
-    const key = verdict.toString().toLowerCase();
-    const table = {
-      'strongly-aligned': 4,
-      'strong_yes': 4,
-      'strong-yes': 4,
-      'strong': 3,
-      'satisfied': 3,
-      'yes': 3,
-      'likely': 2,
-      'promising': 2,
-      'possible': 1,
-      'unclear': -1,
-      'needs_more': -1,
-      'concern': -2,
-      'no': -3,
-      'strong_no': -4,
-      'strongly-negative': -4,
-      'unknown': 0,
-    };
-    return table[key] ?? 0;
+  _lookupGroupTitle(session, groupId) {
+    const plan = session.evaluationPlan;
+    if (!plan?.groups) return null;
+    const match = plan.groups.find((group) => group.id === groupId);
+    return match?.title || null;
   }
 
   _groupImportance(session, groupId) {
     const plan = session.evaluationPlan;
     if (!plan?.groups) return 'must-have';
-    const group = plan.groups.find((item) => item.id === groupId);
-    return group?.importance || 'must-have';
+    const match = plan.groups.find((group) => group.id === groupId);
+    return match?.importance === 'nice-to-have' ? 'nice-to-have' : 'must-have';
   }
 
   async _persistState(session) {
     await writeJson(session.statePath, session.state);
-  }
-
-  _preparePlan(plan) {
-    const map = new Map();
-    if (!plan?.groups) return map;
-    plan.groups.forEach((group) => {
-      const corpus = [group.title, ...(group.criteria || []), ...(group.successSignals || []), ...(group.riskSignals || [])]
-        .filter(Boolean)
-        .join(' ');
-      const keywords = this._extractKeywords(corpus);
-      map.set(group.id, {
-        id: group.id,
-        title: group.title,
-        importance: group.importance === 'nice-to-have' ? 'nice-to-have' : 'must-have',
-        keywords,
-        probingQuestions: Array.isArray(group.probingQuestions) ? group.probingQuestions : [],
-        fallbackRationale: group.successSummary || group.criteria?.[0] || group.title,
-      });
-    });
-    return map;
-  }
-
-  _extractKeywords(text) {
-    if (!text) return [];
-    return text
-      .toLowerCase()
-      .split(/[^a-z0-9+#.]+/)
-      .map((token) => token.trim())
-      .filter((token) => token.length > 2 && !STOP_WORDS.has(token));
-  }
-
-  _tokenize(text) {
-    if (!text) return [];
-    return text
-      .toLowerCase()
-      .split(/[^a-z0-9+#.]+/)
-      .map((token) => token.trim())
-      .filter((token) => token.length > 0);
-  }
-
-  _scoreToVerdict(score) {
-    if (score >= 0.45) return 'satisfied';
-    if (score >= 0.25) return 'likely';
-    if (score > 0) return 'needs_more';
-    return 'unknown';
-  }
-
-  async _applyHeuristicEvaluation(session, batch, { error, reason } = {}) {
-    const metaMap = session.planMeta && session.planMeta.size ? session.planMeta : this._preparePlan(session.evaluationPlan);
-    if (!metaMap || !metaMap.size) {
-      this.logger.warn('[eval-orchestrator] No plan meta available for heuristic evaluation');
-      return;
-    }
-
-    const groups = [];
-    const timestamp = new Date().toISOString();
-
-    metaMap.forEach((meta, groupId) => {
-      const result = this._evaluateGroupHeuristic(meta, batch);
-      const verdict = this._scoreToVerdict(result.score);
-      const confidence = Math.round(Math.max(0, Math.min(1, result.score)) * 100);
-      const rationale = result.bestChunk
-        ? `Candidate mentioned: "${result.bestChunk.text}"`
-        : meta.fallbackRationale || '';
-      const followUp = confidence >= 60 ? [] : meta.probingQuestions.slice(0, 1);
-
-      const existing = session.state.groups[groupId];
-      const hasAuthoritativeSignal = existing && existing.source && existing.source !== 'heuristic';
-      if (hasAuthoritativeSignal) {
-        return;
-      }
-
-      groups.push({
-        groupId,
-        verdict,
-        confidence,
-        rationale,
-        followUpQuestions: followUp,
-        notableQuotes: result.bestChunk ? [result.bestChunk.text] : [],
-        conflicts: [],
-      });
-    });
-
-    const heuristicResult = { groups };
-    await this._applyResult(session, heuristicResult, batch, { source: reason || 'heuristic', skipEvent: false });
-  }
-
-  _evaluateGroupHeuristic(meta, batch) {
-    const keywords = meta.keywords || [];
-    if (!keywords.length) {
-      return { score: 0, bestChunk: null };
-    }
-
-    let bestScore = 0;
-    let bestChunk = null;
-
-    batch.forEach((chunk) => {
-      const chunkTokens = this._tokenize(chunk.text);
-      if (!chunkTokens.length) {
-        return;
-      }
-      const hits = chunkTokens.filter((token) => keywords.includes(token));
-      const uniqueHits = new Set(hits);
-      const score = uniqueHits.size / keywords.length;
-
-      if (score > bestScore) {
-        bestScore = score;
-        bestChunk = chunk;
-      }
-    });
-
-    return { score: bestScore, bestChunk };
   }
 }
 

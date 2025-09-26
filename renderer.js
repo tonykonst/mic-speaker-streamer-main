@@ -1205,6 +1205,18 @@ function setupEvidenceListeners() {
         });
         evidenceListeners.push(detach);
     }
+    if (window.electronAPI.onGuidanceReset) {
+        const detach = window.electronAPI.onGuidanceReset((payload) => {
+            console.log('Guidance reset:', payload);
+            if (payload && Array.isArray(payload.entries)) {
+                guidanceEntries = payload.entries.slice(0, MAX_GUIDANCE_ENTRIES);
+            } else {
+                guidanceEntries = [];
+            }
+            renderGuidanceQueue();
+        });
+        evidenceListeners.push(detach);
+    }
     if (window.electronAPI.onJDEvaluationPlan) {
         const detach = window.electronAPI.onJDEvaluationPlan(({ plan }) => {
             activeEvaluationPlan = plan || null;

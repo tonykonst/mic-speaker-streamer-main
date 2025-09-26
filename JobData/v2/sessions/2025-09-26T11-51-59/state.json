@@ -1,0 +1,44 @@
+{
+  "sessionId": "2025-09-26T11-51-59",
+  "updatedAt": "2025-09-26T11:54:08.139Z",
+  "overallFit": 90,
+  "planVersion": "2025-09-23T10:57:22.396Z",
+  "groups": {
+    "1": {
+      "id": 1,
+      "title": "Technical Skills",
+      "verdict": "unknown",
+      "confidence": 0,
+      "rationale": "Candidate demonstrates deep expertise across the full-stack JavaScript ecosystem with proven experience building secure, high-performance Electron apps integrated with OpenAI. Strong track record of delivering at scale.",
+      "followUpQuestion": null,
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": null,
+      "source": null
+    },
+    "2": {
+      "id": 2,
+      "title": "Communication & Collaboration",
+      "verdict": "unknown",
+      "confidence": 0,
+      "rationale": "Candidate is a strong communicator, creating clear docs and keeping stakeholders informed. Elevates the team through mentorship and constructive participation in reviews.",
+      "followUpQuestion": null,
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": null,
+      "source": null
+    },
+    "3": {
+      "id": 3,
+      "title": "Experience with HR Tech",
+      "verdict": "unknown",
+      "confidence": 0,
+      "rationale": "Candidate brings valuable experience with HR tech, reporting/analytics, and conversational AI that will accelerate contribution and product impact.",
+      "followUpQuestion": null,
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": null,
+      "source": null
+    }
+  }
+}
