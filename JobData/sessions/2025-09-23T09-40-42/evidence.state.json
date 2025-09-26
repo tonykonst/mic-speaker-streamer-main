@@ -1,0 +1,409 @@
+{
+  "sessionId": "2025-09-23T09-40-42",
+  "revision": 18,
+  "requirements": {
+    "fallback-4": {
+      "id": "fallback-4",
+      "confidence": 28,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-4",
+          "timestamp": "2025-09-23T09:40:54.837Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "Most of that time on product teams.",
+          "tokens": [
+            "time",
+            "time"
+          ]
+        },
+        {
+          "chunkId": "chunk-3",
+          "timestamp": "2025-09-23T09:40:51.862Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "And for the last seven years, I've been working as a full-stack developer.",
+          "tokens": [
+            "full",
+            "full"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-23T09:40:54.837Z",
+      "observations": 2,
+      "topScore": 0.3333333333333333
+    },
+    "fallback-5": {
+      "id": "fallback-5",
+      "confidence": 32,
+      "status": "likely",
+      "evidence": [
+        {
+          "chunkId": "chunk-28",
+          "timestamp": "2025-09-23T09:41:55.237Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "breaking the product's visual language.",
+          "tokens": [
+            "the",
+            "the"
+          ]
+        },
+        {
+          "chunkId": "chunk-15",
+          "timestamp": "2025-09-23T09:41:27.776Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "The application can handle hour-long or longer sessions without memory leaks.",
+          "tokens": [
+            "the",
+            "the"
+          ]
+        },
+        {
+          "chunkId": "chunk-9",
+          "timestamp": "2025-09-23T09:41:09.895Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "I'm responsible for the architecture using Node.js and Electron.",
+          "tokens": [
+            "the",
+            "the"
+          ]
+        },
+        {
+          "chunkId": "chunk-3",
+          "timestamp": "2025-09-23T09:40:51.862Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "And for the last seven years, I've been working as a full-stack developer.",
+          "tokens": [
+            "the",
+            "the"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-23T09:41:55.237Z",
+      "observations": 4,
+      "topScore": 0.3333333333333333
+    },
+    "fallback-1": {
+      "id": "fallback-1",
+      "confidence": 15,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-5",
+          "timestamp": "2025-09-23T09:40:57.604Z",
+          "source": "speaker",
+          "score": 0.143,
+          "text": "building real-world user interactions.",
+          "tokens": [
+            "real",
+            "real"
+          ]
+        },
+        {
+          "chunkId": "chunk-4",
+          "timestamp": "2025-09-23T09:40:54.837Z",
+          "source": "speaker",
+          "score": 0.143,
+          "text": "Most of that time on product teams.",
+          "tokens": [
+            "time",
+            "time"
+          ]
+        },
+        {
+          "chunkId": "chunk-3",
+          "timestamp": "2025-09-23T09:40:51.862Z",
+          "source": "speaker",
+          "score": 0.286,
+          "text": "And for the last seven years, I've been working as a full-stack developer.",
+          "tokens": [
+            "full",
+            "stack",
+            "full",
+            "stack"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-23T09:40:57.604Z",
+      "observations": 3,
+      "topScore": 0.2857142857142857
+    },
+    "fallback-8": {
+      "id": "fallback-8",
+      "confidence": 7,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-27",
+          "timestamp": "2025-09-23T09:41:52.977Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "locks and statuses to avoid.",
+          "tokens": [
+            "and",
+            "and",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-25",
+          "timestamp": "2025-09-23T09:41:47.829Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "and markdown export.",
+          "tokens": [
+            "and",
+            "and",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-22",
+          "timestamp": "2025-09-23T09:41:40.809Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "and Live Report feature.",
+          "tokens": [
+            "and",
+            "and",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-19",
+          "timestamp": "2025-09-23T09:41:37.148Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "focusing on component reuse and minimizing custom styles.",
+          "tokens": [
+            "and",
+            "and",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-16",
+          "timestamp": "2025-09-23T09:41:28.326Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "and with clear tracing.",
+          "tokens": [
+            "and",
+            "and",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-13",
+          "timestamp": "2025-09-23T09:41:20.818Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "and implemented a backpressor cue.",
+          "tokens": [
+            "and",
+            "and",
+            "and"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-23T09:41:52.977Z",
+      "observations": 12,
+      "topScore": 0.13333333333333333
+    },
+    "fallback-10": {
+      "id": "fallback-10",
+      "confidence": 7,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-27",
+          "timestamp": "2025-09-23T09:41:52.977Z",
+          "source": "speaker",
+          "score": 0.063,
+          "text": "locks and statuses to avoid.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-25",
+          "timestamp": "2025-09-23T09:41:47.829Z",
+          "source": "speaker",
+          "score": 0.063,
+          "text": "and markdown export.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-22",
+          "timestamp": "2025-09-23T09:41:40.809Z",
+          "source": "speaker",
+          "score": 0.063,
+          "text": "and Live Report feature.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-19",
+          "timestamp": "2025-09-23T09:41:37.148Z",
+          "source": "speaker",
+          "score": 0.063,
+          "text": "focusing on component reuse and minimizing custom styles.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-18",
+          "timestamp": "2025-09-23T09:41:32.922Z",
+          "source": "speaker",
+          "score": 0.063,
+          "text": "I typically work with React.",
+          "tokens": [
+            "with",
+            "with"
+          ]
+        },
+        {
+          "chunkId": "chunk-16",
+          "timestamp": "2025-09-23T09:41:28.326Z",
+          "source": "speaker",
+          "score": 0.125,
+          "text": "and with clear tracing.",
+          "tokens": [
+            "with",
+            "with",
+            "and"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-23T09:41:52.977Z",
+      "observations": 11,
+      "topScore": 0.125
+    },
+    "fallback-6": {
+      "id": "fallback-6",
+      "confidence": 4,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-27",
+          "timestamp": "2025-09-23T09:41:52.977Z",
+          "source": "speaker",
+          "score": 0.033,
+          "text": "locks and statuses to avoid.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-25",
+          "timestamp": "2025-09-23T09:41:47.829Z",
+          "source": "speaker",
+          "score": 0.033,
+          "text": "and markdown export.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-22",
+          "timestamp": "2025-09-23T09:41:40.809Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "and Live Report feature.",
+          "tokens": [
+            "live",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-19",
+          "timestamp": "2025-09-23T09:41:37.148Z",
+          "source": "speaker",
+          "score": 0.033,
+          "text": "focusing on component reuse and minimizing custom styles.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-17",
+          "timestamp": "2025-09-23T09:41:31.165Z",
+          "source": "speaker",
+          "score": 0.033,
+          "text": "From a front-end perspective...",
+          "tokens": [
+            "end",
+            "end"
+          ]
+        },
+        {
+          "chunkId": "chunk-16",
+          "timestamp": "2025-09-23T09:41:28.326Z",
+          "source": "speaker",
+          "score": 0.033,
+          "text": "and with clear tracing.",
+          "tokens": [
+            "and"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-23T09:41:52.977Z",
+      "observations": 14,
+      "topScore": 0.13333333333333333
+    },
+    "fallback-9": {
+      "id": "fallback-9",
+      "confidence": 10,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-8",
+          "timestamp": "2025-09-23T09:41:05.572Z",
+          "source": "speaker",
+          "score": 0.133,
+          "text": "we're building a platform that analyzes live audio feeds from meetings.",
+          "tokens": [
+            "that",
+            "audio",
+            "that",
+            "audio"
+          ]
+        },
+        {
+          "chunkId": "chunk-5",
+          "timestamp": "2025-09-23T09:40:57.604Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "building real-world user interactions.",
+          "tokens": [
+            "real"
+          ]
+        },
+        {
+          "chunkId": "chunk-4",
+          "timestamp": "2025-09-23T09:40:54.837Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "Most of that time on product teams.",
+          "tokens": [
+            "that",
+            "that"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-23T09:41:05.572Z",
+      "observations": 3,
+      "topScore": 0.13333333333333333
+    }
+  },
+  "lastChunkAt": "2025-09-23T09:41:55.237Z"
+}

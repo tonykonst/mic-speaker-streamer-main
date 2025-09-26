@@ -1,0 +1,75 @@
+{
+  "sessionId": "2025-09-23T11-11-43",
+  "overallFit": 1,
+  "updatedAt": "2025-09-23T11:14:12.788Z",
+  "requirements": {
+    "1": {
+      "id": 1,
+      "title": "Technical Skills",
+      "verdict": "unknown",
+      "confidence": 0,
+      "reasoning": "Candidate demonstrates deep expertise across the full-stack JavaScript ecosystem with proven experience building secure, high-performance Electron apps integrated with OpenAI. Strong track record of delivering at scale.",
+      "followUpQuestion": "Walk me through the end-to-end flow of the most complex full-stack JavaScript app you've built.",
+      "evidence": []
+    },
+    "2": {
+      "id": 2,
+      "title": "Communication & Collaboration",
+      "verdict": "unknown",
+      "confidence": 0,
+      "reasoning": "Candidate is a strong communicator, creating clear docs and keeping stakeholders informed. Elevates the team through mentorship and constructive participation in reviews.",
+      "followUpQuestion": "What's your approach to keeping project stakeholders informed?",
+      "evidence": []
+    },
+    "3": {
+      "id": 3,
+      "title": "Experience with HR Tech",
+      "verdict": "needs_more",
+      "confidence": 2,
+      "reasoning": "Candidate mentioned: \"I built embedding caching.\"",
+      "followUpQuestion": "What HR tech integrations have you built in the past?",
+      "evidence": [
+        {
+          "text": "I built embedding caching."
+        }
+      ]
+    }
+  },
+  "groups": [
+    {
+      "id": 1,
+      "title": "Technical Skills",
+      "verdict": "unknown",
+      "confidence": 0,
+      "rationale": "Candidate demonstrates deep expertise across the full-stack JavaScript ecosystem with proven experience building secure, high-performance Electron apps integrated with OpenAI. Strong track record of delivering at scale.",
+      "followUpQuestion": "Walk me through the end-to-end flow of the most complex full-stack JavaScript app you've built.",
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T11:14:12.788Z"
+    },
+    {
+      "id": 2,
+      "title": "Communication & Collaboration",
+      "verdict": "unknown",
+      "confidence": 0,
+      "rationale": "Candidate is a strong communicator, creating clear docs and keeping stakeholders informed. Elevates the team through mentorship and constructive participation in reviews.",
+      "followUpQuestion": "What's your approach to keeping project stakeholders informed?",
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T11:14:12.788Z"
+    },
+    {
+      "id": 3,
+      "title": "Experience with HR Tech",
+      "verdict": "needs_more",
+      "confidence": 2,
+      "rationale": "Candidate mentioned: \"I built embedding caching.\"",
+      "followUpQuestion": "What HR tech integrations have you built in the past?",
+      "notableQuotes": [
+        "I built embedding caching."
+      ],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T11:14:12.788Z"
+    }
+  ]
+}

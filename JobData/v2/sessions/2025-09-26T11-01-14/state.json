@@ -1,0 +1,44 @@
+{
+  "sessionId": "2025-09-26T11-01-14",
+  "updatedAt": "2025-09-26T11:03:32.963Z",
+  "overallFit": 88,
+  "planVersion": "2025-09-23T10:57:22.396Z",
+  "groups": {
+    "1": {
+      "id": 1,
+      "title": "Technical Skills",
+      "verdict": "pass",
+      "confidence": 90,
+      "rationale": "The candidate has demonstrated deep expertise in full-stack JavaScript development, including building production Electron apps with real-time data processing capabilities and integrating with large language models like OpenAI. They have a strong track record of delivering complex, secure applications at scale.",
+      "followUpQuestion": "Walk me through the end-to-end flow of the most complex full-stack JavaScript app you've built.",
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-26T11:03:32.963Z",
+      "source": "claude"
+    },
+    "2": {
+      "id": 2,
+      "title": "Communication & Collaboration",
+      "verdict": "pass",
+      "confidence": 90,
+      "rationale": "The candidate is an excellent communicator who proactively keeps stakeholders informed, produces clear technical documentation, and actively supports the growth and development of their team members. They constructively participate in architecture and code reviews.",
+      "followUpQuestion": "What's your approach to keeping project stakeholders informed?",
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-26T11:03:32.963Z",
+      "source": "claude"
+    },
+    "3": {
+      "id": 3,
+      "title": "Experience with HR Tech",
+      "verdict": "pass",
+      "confidence": 80,
+      "rationale": "The candidate brings valuable experience with HR tech integrations, reporting and analytics, as well as conversational AI, which will be beneficial for this role. While they may not have direct domain expertise, they should be able to ramp up quickly and contribute effectively.",
+      "followUpQuestion": "What HR tech integrations have you built in the past?",
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-26T11:03:32.963Z",
+      "source": "claude"
+    }
+  }
+}

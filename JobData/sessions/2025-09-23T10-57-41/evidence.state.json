@@ -1,0 +1,391 @@
+{
+  "sessionId": "2025-09-23T10-57-41",
+  "revision": 13,
+  "requirements": {
+    "fallback-8": {
+      "id": "fallback-8",
+      "confidence": 8,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-20",
+          "timestamp": "2025-09-23T10:58:27.917Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "and the user could see why the conclusion was reached.",
+          "tokens": [
+            "and",
+            "and",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-18",
+          "timestamp": "2025-09-23T10:58:22.662Z",
+          "source": "speaker",
+          "score": 0.133,
+          "text": "and organized the reasoning pipeline so that LLM decisions were explainable.",
+          "tokens": [
+            "and",
+            "that",
+            "and",
+            "that",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-14",
+          "timestamp": "2025-09-23T10:58:10.785Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "and embeddings.",
+          "tokens": [
+            "and",
+            "and",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-9",
+          "timestamp": "2025-09-23T10:58:01.243Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "locks and statuses to avoid.",
+          "tokens": [
+            "and",
+            "and",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-7",
+          "timestamp": "2025-09-23T10:57:55.660Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "and Markdown Export.",
+          "tokens": [
+            "and",
+            "and",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-4",
+          "timestamp": "2025-09-23T10:57:52.247Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "and Live Report feature.",
+          "tokens": [
+            "and",
+            "and",
+            "and"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-23T10:58:27.917Z",
+      "observations": 7,
+      "topScore": 0.13333333333333333
+    },
+    "fallback-10": {
+      "id": "fallback-10",
+      "confidence": 7,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-20",
+          "timestamp": "2025-09-23T10:58:27.917Z",
+          "source": "speaker",
+          "score": 0.063,
+          "text": "and the user could see why the conclusion was reached.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-18",
+          "timestamp": "2025-09-23T10:58:22.662Z",
+          "source": "speaker",
+          "score": 0.063,
+          "text": "and organized the reasoning pipeline so that LLM decisions were explainable.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-17",
+          "timestamp": "2025-09-23T10:58:16.395Z",
+          "source": "speaker",
+          "score": 0.063,
+          "text": "Monitored rate limits.",
+          "tokens": [
+            "rate"
+          ]
+        },
+        {
+          "chunkId": "chunk-14",
+          "timestamp": "2025-09-23T10:58:10.785Z",
+          "source": "speaker",
+          "score": 0.063,
+          "text": "and embeddings.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-11",
+          "timestamp": "2025-09-23T10:58:07.335Z",
+          "source": "speaker",
+          "score": 0.125,
+          "text": "I've integrated extensively with the OpenAI API.",
+          "tokens": [
+            "openai",
+            "with",
+            "openai",
+            "with"
+          ]
+        },
+        {
+          "chunkId": "chunk-9",
+          "timestamp": "2025-09-23T10:58:01.243Z",
+          "source": "speaker",
+          "score": 0.063,
+          "text": "locks and statuses to avoid.",
+          "tokens": [
+            "and"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-23T10:58:27.917Z",
+      "observations": 9,
+      "topScore": 0.125
+    },
+    "fallback-6": {
+      "id": "fallback-6",
+      "confidence": 4,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-20",
+          "timestamp": "2025-09-23T10:58:27.917Z",
+          "source": "speaker",
+          "score": 0.033,
+          "text": "and the user could see why the conclusion was reached.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-18",
+          "timestamp": "2025-09-23T10:58:22.662Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "and organized the reasoning pipeline so that LLM decisions were explainable.",
+          "tokens": [
+            "that",
+            "that",
+            "that",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-14",
+          "timestamp": "2025-09-23T10:58:10.785Z",
+          "source": "speaker",
+          "score": 0.033,
+          "text": "and embeddings.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-12",
+          "timestamp": "2025-09-23T10:58:08.311Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "Real-time",
+          "tokens": [
+            "real",
+            "time",
+            "real",
+            "time"
+          ]
+        },
+        {
+          "chunkId": "chunk-9",
+          "timestamp": "2025-09-23T10:58:01.243Z",
+          "source": "speaker",
+          "score": 0.033,
+          "text": "locks and statuses to avoid.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-7",
+          "timestamp": "2025-09-23T10:57:55.660Z",
+          "source": "speaker",
+          "score": 0.033,
+          "text": "and Markdown Export.",
+          "tokens": [
+            "and"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-23T10:58:27.917Z",
+      "observations": 8,
+      "topScore": 0.06666666666666667
+    },
+    "fallback-5": {
+      "id": "fallback-5",
+      "confidence": 33,
+      "status": "likely",
+      "evidence": [
+        {
+          "chunkId": "chunk-20",
+          "timestamp": "2025-09-23T10:58:27.917Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "and the user could see why the conclusion was reached.",
+          "tokens": [
+            "the",
+            "the"
+          ]
+        },
+        {
+          "chunkId": "chunk-19",
+          "timestamp": "2025-09-23T10:58:24.848Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "Each decision was based on specific excerpts from the transcript.",
+          "tokens": [
+            "the",
+            "the"
+          ]
+        },
+        {
+          "chunkId": "chunk-18",
+          "timestamp": "2025-09-23T10:58:22.662Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "and organized the reasoning pipeline so that LLM decisions were explainable.",
+          "tokens": [
+            "the",
+            "the"
+          ]
+        },
+        {
+          "chunkId": "chunk-15",
+          "timestamp": "2025-09-23T10:58:12.766Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "In the latest project...",
+          "tokens": [
+            "the",
+            "the"
+          ]
+        },
+        {
+          "chunkId": "chunk-11",
+          "timestamp": "2025-09-23T10:58:07.335Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "I've integrated extensively with the OpenAI API.",
+          "tokens": [
+            "the",
+            "the"
+          ]
+        },
+        {
+          "chunkId": "chunk-10",
+          "timestamp": "2025-09-23T10:58:03.753Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "breaking the product's visual language.",
+          "tokens": [
+            "the",
+            "the"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-23T10:58:27.917Z",
+      "observations": 6,
+      "topScore": 0.3333333333333333
+    },
+    "fallback-4": {
+      "id": "fallback-4",
+      "confidence": 20,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-12",
+          "timestamp": "2025-09-23T10:58:08.311Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "Real-time",
+          "tokens": [
+            "time",
+            "time"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-23T10:58:08.311Z",
+      "observations": 1,
+      "topScore": 0.3333333333333333
+    },
+    "fallback-1": {
+      "id": "fallback-1",
+      "confidence": 17,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-12",
+          "timestamp": "2025-09-23T10:58:08.311Z",
+          "source": "speaker",
+          "score": 0.286,
+          "text": "Real-time",
+          "tokens": [
+            "real",
+            "time",
+            "real",
+            "time"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-23T10:58:08.311Z",
+      "observations": 1,
+      "topScore": 0.2857142857142857
+    },
+    "fallback-9": {
+      "id": "fallback-9",
+      "confidence": 6,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-18",
+          "timestamp": "2025-09-23T10:58:22.662Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "and organized the reasoning pipeline so that LLM decisions were explainable.",
+          "tokens": [
+            "that",
+            "that"
+          ]
+        },
+        {
+          "chunkId": "chunk-12",
+          "timestamp": "2025-09-23T10:58:08.311Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "Real-time",
+          "tokens": [
+            "real"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-23T10:58:22.662Z",
+      "observations": 2,
+      "topScore": 0.06666666666666667
+    }
+  },
+  "lastChunkAt": "2025-09-23T10:58:27.917Z"
+}

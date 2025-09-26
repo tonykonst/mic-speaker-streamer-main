@@ -1,0 +1,36 @@
+{
+  "sessionId": "debug-session",
+  "updatedAt": "2025-09-23T11:05:09.283Z",
+  "overallFit": 93,
+  "planVersion": "2025-09-23T11:04:46.427Z",
+  "groups": {
+    "technical-skills": {
+      "id": "technical-skills",
+      "title": "Technical Skills",
+      "verdict": "strong-yes",
+      "confidence": 95,
+      "rationale": "The candidate not only has experience building Electron apps and integrating APIs, but also implemented streaming analysis capabilities using the Claude API. This demonstrates strong technical skills directly relevant to the role.",
+      "followUpQuestion": null,
+      "notableQuotes": [
+        "I built the Electron app using Node.js and integrated multiple APIs.",
+        "I also added streaming analysis using the Claude API to score transcripts."
+      ],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T11:05:09.283Z"
+    },
+    "communication": {
+      "id": "communication",
+      "title": "Communication",
+      "verdict": "strong-yes",
+      "confidence": 90,
+      "rationale": "The candidate goes beyond just sharing updates, by providing stakeholders with dashboards and Slack alerts. This proactive, multi-channel approach to communication shows they are skilled at keeping stakeholders well-informed.",
+      "followUpQuestion": null,
+      "notableQuotes": [
+        "For collaboration I share weekly updates and document decisions.",
+        "Stakeholders receive dashboards and Slack alerts."
+      ],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T11:05:09.283Z"
+    }
+  }
+}

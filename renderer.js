@@ -264,6 +264,9 @@ let activeJD = null;
 let transcriptChunkSeq = 0;
 let latestReasoning = null;
 let guidanceEntries = [];
+let activeEvaluationPlan = null;
+let latestReasoningState = null;
+let conflictEntries = [];
 
 // Write queue to prevent race conditions
 class WriteQueue {
@@ -325,10 +328,13 @@ const jdFileInput = document.getElementById('jdFileInput');
 const guidanceQueue = document.getElementById('guidanceQueue');
 const reportPreview = document.getElementById('reportPreview');
 const exportReportBtn = document.getElementById('exportReportBtn');
+const groupContainer = document.getElementById('groupContainer');
+const conflictList = document.getElementById('conflictList');
 
 const MAX_JD_FILE_BYTES = 200 * 1024; // 200 KB safeguard
 const MAX_JD_CHAR_LENGTH = 50000;
 const MAX_GUIDANCE_ENTRIES = 20;
+const MAX_CONFLICT_ENTRIES = 30;
 
 // Configuration
 const CONFIG = {
@@ -568,9 +574,13 @@ class SpeechLogger {
             this._clearState('microphone');
             this._clearState('speaker');
             latestReasoning = null;
+            latestReasoningState = null;
             guidanceEntries = [];
+            conflictEntries = [];
+            renderGroupCards();
             renderGuidanceQueue();
             renderReportPreview(null);
+            renderConflictList();
             updateJDFitStatus(null);
             setExportEnabled(false);
         }
@@ -627,9 +637,14 @@ function renderJDPreview(jdData) {
 
     if (!jdData) {
         jdPreview.textContent = 'No job description loaded.';
+        if (!activeEvaluationPlan) {
+            jdPreview.textContent += '\nEvaluation plan: not available.';
+        }
         updateJDFitStatus(null);
         renderGuidanceQueue();
         renderReportPreview(null);
+        renderGroupCards();
+        renderConflictList();
         return;
     }
 
@@ -640,7 +655,19 @@ function renderJDPreview(jdData) {
         ? jdData.text.trim().split('\n').slice(0, 30).join('\n')
         : jdData.snippet || '';
 
-    jdPreview.textContent = `${header}\nRequirements: ${requirementCount}\n\n${snippet}`;
+    const planGroups = Array.isArray(activeEvaluationPlan?.groups) ? activeEvaluationPlan.groups.length : 0;
+    let planSummary = 'Evaluation plan: not available.';
+    if (planGroups) {
+        const groupTitles = activeEvaluationPlan.groups
+            .slice(0, 4)
+            .map((group) => group.title || group.id)
+            .join(', ');
+        planSummary = `Evaluation groups: ${planGroups}${groupTitles ? `\n${groupTitles}` : ''}`;
+    }
+
+    jdPreview.textContent = `${header}\nRequirements: ${requirementCount}\n${planSummary ? `\n${planSummary}` : ''}\n\n${snippet}`;
+    renderGroupCards();
+    renderConflictList();
 }
 
 async function refreshJDFromMain() {
@@ -648,12 +675,18 @@ async function refreshJDFromMain() {
         const result = await window.electronAPI.getActiveJD();
         if (result.success && result.data) {
             activeJD = result.data;
+            activeEvaluationPlan = result.data.evaluationPlan || null;
+            conflictEntries = [];
         } else {
             activeJD = null;
+            activeEvaluationPlan = null;
+            conflictEntries = [];
         }
     } catch (error) {
         console.error('Failed to fetch active JD:', error);
         activeJD = null;
+        activeEvaluationPlan = null;
+        conflictEntries = [];
     }
 
     renderJDPreview(activeJD);
@@ -680,8 +713,13 @@ async function submitJDText(text, source) {
             throw new Error(response.error || 'Unknown JD save error');
         }
         activeJD = response.data;
+        activeEvaluationPlan = response.data.evaluationPlan || null;
+        guidanceEntries = [];
+        conflictEntries = [];
         renderJDPreview(activeJD);
         await refreshReasoningState();
+        renderGuidanceQueue();
+        renderConflictList();
         alert('Job description loaded successfully.');
     } catch (error) {
         console.error('Failed to store JD:', error);
@@ -737,11 +775,16 @@ function setupJDControls() {
                 throw new Error(result.error || 'Unknown clear error');
             }
             activeJD = null;
+            activeEvaluationPlan = null;
             renderJDPreview(activeJD);
             latestReasoning = null;
+            latestReasoningState = null;
             guidanceEntries = [];
+            conflictEntries = [];
             renderGuidanceQueue();
+            renderGroupCards();
             renderReportPreview(null);
+            renderConflictList();
             updateJDFitStatus(null);
             setExportEnabled(false);
         } catch (error) {
@@ -796,28 +839,275 @@ function setExportEnabled(enabled) {
     exportReportBtn.disabled = !enabled;
 }
 
-function renderReportPreview(reasoning) {
+function escapeHtml(value) {
+    if (value == null) return '';
+    return value
+        .toString()
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+function lookupGroupMetadata(groupId) {
+    if (!groupId) return null;
+    if (activeEvaluationPlan?.groups) {
+        const foundPlan = activeEvaluationPlan.groups.find((group) => group.id === groupId);
+        if (foundPlan) return foundPlan;
+    }
+    if (latestReasoningState?.groups) {
+        const foundState = latestReasoningState.groups.find((group) => group.id === groupId);
+        if (foundState) return foundState;
+    }
+    return null;
+}
+
+function buildPlanOrderMap() {
+    const order = new Map();
+    if (activeEvaluationPlan?.groups) {
+        activeEvaluationPlan.groups.forEach((group, index) => {
+            order.set(group.id, index);
+        });
+    }
+    return order;
+}
+
+function buildPlaceholderGroups() {
+    if (!activeEvaluationPlan?.groups) return [];
+    return activeEvaluationPlan.groups.map((group) => ({
+        id: group.id,
+        title: group.title,
+        verdict: 'unknown',
+        confidence: 0,
+        rationale: group.successSummary ? `Goal: ${group.successSummary}` : 'Awaiting evidence.',
+        followUpQuestion: group.probingQuestions?.[0] || null,
+        notableQuotes: [],
+        conflicts: [],
+        lastUpdated: null,
+    }));
+}
+
+function normalizeGroupEntry(group, fallbackTitle, updatedAt) {
+    const id = group.groupId || group.id;
+    const title = group.title || fallbackTitle || id;
+    const confidence = typeof group.confidence === 'number'
+        ? Math.max(0, Math.min(100, Math.round(group.confidence)))
+        : 0;
+    const followUpQuestion = group.followUpQuestion
+        || (Array.isArray(group.followUpQuestions) ? group.followUpQuestions[0] : null);
+    const notableQuotes = Array.isArray(group.notableQuotes)
+        ? group.notableQuotes.slice(0, 5)
+        : [];
+    const conflicts = Array.isArray(group.conflicts)
+        ? group.conflicts.map((conflict) => ({
+            summary: conflict.summary || '',
+            evidence: Array.isArray(conflict.evidence) ? conflict.evidence : [],
+            recommendedAction: conflict.recommendedAction || null,
+          }))
+        : [];
+
+    return {
+        id,
+        title,
+        verdict: (group.verdict || group.status || 'unknown').toLowerCase(),
+        confidence,
+        rationale: group.rationale || '',
+        followUpQuestion,
+        notableQuotes,
+        conflicts,
+        lastUpdated: group.lastUpdated || updatedAt || null,
+    };
+}
+
+function normalizeLegacyRequirement(req) {
+    return {
+        id: req.id,
+        title: req.title || req.id,
+        verdict: (req.verdict || req.status || 'unknown').toLowerCase(),
+        confidence: req.confidence ?? 0,
+        rationale: req.reasoning || '',
+        followUpQuestion: req.followUpQuestion || null,
+        notableQuotes: Array.isArray(req.evidence)
+            ? req.evidence.map((item) => item.text).filter(Boolean).slice(0, 5)
+            : [],
+        conflicts: [],
+        lastUpdated: req.lastUpdated || null,
+    };
+}
+
+function normalizeReasoningState(raw) {
+    if (!raw) return null;
+    const orderMap = buildPlanOrderMap();
+    const timestamp = raw.updatedAt || new Date().toISOString();
+    const planTitles = new Map();
+    if (activeEvaluationPlan?.groups) {
+        activeEvaluationPlan.groups.forEach((group) => {
+            planTitles.set(group.id, group.title);
+        });
+    }
+
+    const state = {
+        sessionId: raw.sessionId || currentSessionId || null,
+        updatedAt: timestamp,
+        overallFit: typeof raw.overallFit === 'number' ? raw.overallFit : null,
+        groups: [],
+    };
+
+    if (Array.isArray(raw.groups) && raw.groups.length) {
+        state.groups = raw.groups.map((group) => {
+            const title = planTitles.get(group.groupId || group.id);
+            return normalizeGroupEntry(group, title, timestamp);
+        });
+    } else if (raw.groups && typeof raw.groups === 'object' && Object.keys(raw.groups).length) {
+        state.groups = Object.values(raw.groups).map((group) => {
+            const title = planTitles.get(group.groupId || group.id);
+            return normalizeGroupEntry(group, title, timestamp);
+        });
+    } else if (raw.requirements && Object.keys(raw.requirements).length) {
+        state.groups = Object.values(raw.requirements).map((req) => normalizeLegacyRequirement(req));
+    }
+
+    if (!state.groups.length) {
+        state.groups = buildPlaceholderGroups();
+    }
+
+    state.groups.sort((a, b) => {
+        const orderA = orderMap.has(a.id) ? orderMap.get(a.id) : Number.MAX_SAFE_INTEGER;
+        const orderB = orderMap.has(b.id) ? orderMap.get(b.id) : Number.MAX_SAFE_INTEGER;
+        return orderA - orderB;
+    });
+
+    return state;
+}
+
+function renderReportPreview(state) {
     if (!reportPreview) return;
-    if (!reasoning || !reasoning.requirements || !Object.keys(reasoning.requirements).length) {
+    if (!state || !state.groups || !state.groups.length) {
         reportPreview.textContent = 'Report will appear after the session starts.';
         return;
     }
 
     const lines = [];
-    lines.push(`Session: ${reasoning.sessionId}`);
-    lines.push(`Overall Fit: ${reasoning.overallFit ?? 'N/A'}%`);
-    lines.push(`Updated: ${reasoning.updatedAt}`);
+    lines.push(`Session: ${state.sessionId || currentSessionId || 'N/A'}`);
+    lines.push(`Overall Fit: ${state.overallFit ?? 'N/A'}%`);
+    lines.push(`Updated: ${state.updatedAt || 'N/A'}`);
     lines.push('');
-    for (const req of Object.values(reasoning.requirements)) {
-        lines.push(`- [${req.verdict?.toUpperCase() || 'UNKNOWN'}] ${req.title || req.id} — ${req.confidence ?? 0}%`);
-        if (req.reasoning) {
-            lines.push(`  ${req.reasoning}`);
+
+    state.groups.forEach((group) => {
+        lines.push(`- [${(group.verdict || 'unknown').toUpperCase()}] ${group.title || group.id} — ${group.confidence ?? 0}%`);
+        if (group.rationale) {
+            lines.push(`  Rationale: ${group.rationale}`);
         }
-        if (req.followUpQuestion) {
-            lines.push(`  Follow-up: ${req.followUpQuestion}`);
+        if (group.followUpQuestion) {
+            lines.push(`  Follow-up: ${group.followUpQuestion}`);
         }
-    }
+        if (group.conflicts && group.conflicts.length) {
+            const conflictSummary = group.conflicts[0].summary || 'Conflict detected';
+            lines.push(`  Conflict: ${conflictSummary}`);
+        }
+        if (group.notableQuotes && group.notableQuotes.length) {
+            lines.push('  Quotes:');
+            group.notableQuotes.slice(0, 2).forEach((quote) => {
+                lines.push(`    • ${quote}`);
+            });
+        }
+        lines.push('');
+    });
+
     reportPreview.textContent = lines.join('\n');
+}
+
+function renderGroupCards() {
+    if (!groupContainer) return;
+    const groups = latestReasoningState?.groups?.length
+        ? latestReasoningState.groups
+        : buildPlaceholderGroups();
+
+    if (!groups.length) {
+        groupContainer.innerHTML = '<div class="results">No evaluation groups yet.</div>';
+        return;
+    }
+
+    const cards = groups.map((group) => {
+        const verdict = (group.verdict || 'unknown').toUpperCase();
+        const confidence = typeof group.confidence === 'number' ? `${group.confidence}%` : 'N/A';
+        const rationale = group.rationale ? `<div>${escapeHtml(group.rationale)}</div>` : '';
+        const followUp = group.followUpQuestion ? `<div><em>Follow-up:</em> ${escapeHtml(group.followUpQuestion)}</div>` : '';
+        const quotes = Array.isArray(group.notableQuotes) && group.notableQuotes.length
+            ? `<div>${group.notableQuotes.slice(0, 3).map((quote) => `• ${escapeHtml(quote)}`).join('<br>')}</div>`
+            : '';
+        const conflicts = Array.isArray(group.conflicts) && group.conflicts.length
+            ? `<div><strong>Conflicts (${group.conflicts.length}):</strong> ${escapeHtml(group.conflicts[0].summary || '')}</div>`
+            : '';
+
+        return `
+            <div class="results">
+                <strong>${escapeHtml(group.title || group.id)}</strong>
+                <div>[${escapeHtml(verdict)}] ${escapeHtml(confidence)}</div>
+                ${rationale}
+                ${followUp}
+                ${quotes}
+                ${conflicts}
+            </div>
+        `;
+    }).join('');
+
+    groupContainer.innerHTML = cards;
+}
+
+function collectConflicts() {
+    const items = [];
+    const seen = new Set();
+
+    if (latestReasoningState?.groups) {
+        latestReasoningState.groups.forEach((group) => {
+            (group.conflicts || []).forEach((conflict) => {
+                const key = `${group.id}:${conflict.summary}`;
+                if (!seen.has(key)) {
+                    seen.add(key);
+                    items.push({
+                        groupId: group.id,
+                        groupTitle: group.title,
+                        summary: conflict.summary,
+                        evidence: conflict.evidence || [],
+                        recommendedAction: conflict.recommendedAction || null,
+                        source: 'state',
+                    });
+                }
+            });
+        });
+    }
+
+    conflictEntries.forEach((entry) => {
+        const key = `${entry.groupId || entry.groupTitle}:${entry.summary}`;
+        if (!seen.has(key)) {
+            seen.add(key);
+            items.push(entry);
+        }
+    });
+
+    return items;
+}
+
+function renderConflictList() {
+    if (!conflictList) return;
+    const conflicts = collectConflicts();
+    if (!conflicts.length) {
+        conflictList.textContent = 'No conflicts detected.';
+        return;
+    }
+
+    const lines = conflicts.map((conflict, index) => {
+        const groupLabel = conflict.groupTitle || conflict.groupId || `Group ${index + 1}`;
+        const action = conflict.recommendedAction ? ` → ${conflict.recommendedAction}` : '';
+        const evidenceLine = conflict.evidence && conflict.evidence.length
+            ? `\n   Evidence: ${conflict.evidence.map((item) => item.quote || '').filter(Boolean).slice(0, 2).join(' | ')}`
+            : '';
+        return `${index + 1}. [${groupLabel}] ${conflict.summary || 'Conflict detected'}${action}${evidenceLine}`;
+    });
+
+    conflictList.textContent = lines.join('\n');
 }
 
 function renderGuidanceQueue() {
@@ -827,9 +1117,10 @@ function renderGuidanceQueue() {
         return;
     }
     const lines = guidanceEntries.map((entry, index) => {
-        const prefix = `${index + 1}. [${entry.priority.toUpperCase()}] ${entry.requirementTitle || entry.requirementId}`;
+        const priorityLabel = (entry.priority || 'medium').toString().toUpperCase();
+        const title = entry.requirementTitle || entry.requirementId || 'Requirement';
         const question = entry.question ? ` → ${entry.question}` : '';
-        return `${prefix}${question}\n   (${entry.createdAt})`;
+        return `${index + 1}. [${priorityLabel}] ${title}${question}\n   (${entry.createdAt})`;
     });
     guidanceQueue.textContent = lines.join('\n');
 }
@@ -853,27 +1144,13 @@ function emitTranscriptChunk({ type, transcript, timestamp, latency }) {
 
 const evidenceListeners = [];
 
-function convertReasoningPayload(payload) {
-    if (!payload) return null;
-    const mapped = {
-        sessionId: payload.sessionId,
-        revision: payload.revision,
-        updatedAt: payload.updatedAt,
-        overallFit: payload.overallFit,
-        requirements: {},
-    };
-    if (Array.isArray(payload.requirements)) {
-        payload.requirements.forEach((item) => {
-            mapped.requirements[item.id] = item;
-        });
-    }
-    return mapped;
-}
-
 async function refreshReasoningState() {
     if (!currentSessionId) {
         latestReasoning = null;
+        latestReasoningState = null;
+        renderGroupCards();
         renderReportPreview(null);
+        renderConflictList();
         updateJDFitStatus(null);
         return;
     }
@@ -881,8 +1158,11 @@ async function refreshReasoningState() {
         const response = await window.electronAPI.getReasoningState(currentSessionId);
         if (response.success) {
             latestReasoning = response.data;
-            updateJDFitStatus(latestReasoning?.overallFit);
-            renderReportPreview(latestReasoning);
+            latestReasoningState = normalizeReasoningState(response.data);
+            updateJDFitStatus(latestReasoningState?.overallFit);
+            renderGroupCards();
+            renderReportPreview(latestReasoningState);
+            renderConflictList();
         }
     } catch (error) {
         console.error('Failed to load reasoning state:', error);
@@ -906,8 +1186,11 @@ function setupEvidenceListeners() {
         const detach = window.electronAPI.onReasoningUpdate((payload) => {
             console.log('Reasoning update:', payload);
             latestReasoning = payload;
-            updateJDFitStatus(payload.overallFit);
-            renderReportPreview(convertReasoningPayload(payload));
+            latestReasoningState = normalizeReasoningState(payload);
+            updateJDFitStatus(latestReasoningState?.overallFit);
+            renderGroupCards();
+            renderReportPreview(latestReasoningState);
+            renderConflictList();
         });
         evidenceListeners.push(detach);
     }
@@ -919,6 +1202,37 @@ function setupEvidenceListeners() {
                 guidanceEntries.pop();
             }
             renderGuidanceQueue();
+        });
+        evidenceListeners.push(detach);
+    }
+    if (window.electronAPI.onJDEvaluationPlan) {
+        const detach = window.electronAPI.onJDEvaluationPlan(({ plan }) => {
+            activeEvaluationPlan = plan || null;
+            conflictEntries = [];
+            renderJDPreview(activeJD);
+            renderGroupCards();
+            renderConflictList();
+        });
+        evidenceListeners.push(detach);
+    }
+    if (window.electronAPI.onEvaluationConflict) {
+        const detach = window.electronAPI.onEvaluationConflict((payload) => {
+            console.log('Evaluation conflict:', payload);
+            const meta = lookupGroupMetadata(payload.groupId);
+            const entry = {
+                sessionId: payload.sessionId,
+                groupId: payload.groupId,
+                groupTitle: meta?.title || payload.groupTitle || payload.groupId,
+                summary: payload.summary,
+                evidence: payload.evidence || [],
+                recommendedAction: payload.recommendedAction || null,
+                source: 'event',
+            };
+            conflictEntries.unshift(entry);
+            if (conflictEntries.length > MAX_CONFLICT_ENTRIES) {
+                conflictEntries.pop();
+            }
+            renderConflictList();
         });
         evidenceListeners.push(detach);
     }
@@ -1047,6 +1361,63 @@ async function handleError(e, streamType) {
     await stop();
 }
 
+async function requestMicrophoneStream() {
+    const selectedDeviceId = micSelect?.value;
+    const applyDeviceConstraint = Boolean(selectedDeviceId);
+
+    const buildConstraints = (useDeviceId) => ({
+        audio: useDeviceId && selectedDeviceId
+            ? { deviceId: { exact: selectedDeviceId } }
+            : true,
+        video: false,
+    });
+
+    try {
+        return await navigator.mediaDevices.getUserMedia(buildConstraints(applyDeviceConstraint));
+    } catch (error) {
+        if (error.name === 'OverconstrainedError' || error.name === 'NotFoundError') {
+            console.warn('Selected microphone not available; falling back to system default.');
+            return await navigator.mediaDevices.getUserMedia(buildConstraints(false));
+        }
+        if (error.name === 'NotAllowedError') {
+            throw new Error('Microphone access was denied by macOS. Enable it in System Settings → Privacy & Security → Microphone for the Electron app.');
+        }
+        throw error;
+    }
+}
+
+async function requestSystemAudioStream() {
+    let ready = false;
+    try {
+        await window.electronAPI.enableLoopbackAudio();
+        ready = true;
+        const stream = await navigator.mediaDevices.getDisplayMedia({
+            audio: true,
+            video: true,
+        });
+        const videoTracks = stream.getTracks().filter((track) => track.kind === 'video');
+        videoTracks.forEach((track) => {
+            track.stop();
+            stream.removeTrack(track);
+        });
+        return stream;
+    } catch (error) {
+        if (error.name === 'NotAllowedError') {
+            throw new Error('System audio capture was denied. Enable "Screen Recording" for the Electron app in System Settings → Privacy & Security.');
+        }
+        if (error.name === 'AbortError' && !ready) {
+            throw new Error('System audio loopback did not initialise. Restart the app and try again.');
+        }
+        throw error;
+    } finally {
+        try {
+            await window.electronAPI.disableLoopbackAudio();
+        } catch (loopbackError) {
+            console.warn('Failed to disable loopback audio handler:', loopbackError);
+        }
+    }
+}
+
 // Start transcription
 async function start() {
     try {
@@ -1054,31 +1425,9 @@ async function start() {
         stopBtn.disabled = false;
         modelSelect.disabled = true;
 
-        // Get microphone stream
-        microphoneStream = await navigator.mediaDevices.getUserMedia({
-            audio: {
-                deviceId: {
-                    exact: micSelect.value
-                }
-            },
-            video: false
-        });
+        microphoneStream = await requestMicrophoneStream();
 
-        await window.electronAPI.enableLoopbackAudio();
-
-        // Get display media (system audio)
-        const displayStream = await navigator.mediaDevices.getDisplayMedia({
-            audio: true,
-            video: true
-        });
-
-        await window.electronAPI.disableLoopbackAudio();
-
-        // Remove video tracks, keep only audio
-        const videoTracks = displayStream.getTracks().filter(t => t.kind === 'video');
-        videoTracks.forEach(t => t.stop() && displayStream.removeTrack(t));
-
-        systemAudioStream = displayStream;
+        systemAudioStream = await requestSystemAudioStream();
 
         // Create microphone session
         microphoneSession = new Session(window.electronAPI.apiKey, 'microphone');
@@ -1113,7 +1462,7 @@ async function start() {
         // Start transcription with both streams
         await Promise.all([
             microphoneSession.startTranscription(microphoneStream, sessionConfig),
-            systemAudioSession.startTranscription(displayStream, sessionConfig)
+            systemAudioSession.startTranscription(systemAudioStream, sessionConfig)
         ]);
 
         // Initialize speech logging session
@@ -1207,6 +1556,9 @@ refreshJDFromMain();
 setupEvidenceListeners();
 updateMicSelect();
 setExportEnabled(false);
+renderGroupCards();
+renderConflictList();
+renderGuidanceQueue();
 
 // Cleanup on page unload
 window.addEventListener('beforeunload', async () => {

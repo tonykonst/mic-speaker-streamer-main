@@ -1,0 +1,236 @@
+{
+  "sessionId": "2025-09-23T10-56-48",
+  "revision": 4,
+  "requirements": {
+    "fallback-4": {
+      "id": "fallback-4",
+      "confidence": 28,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-5",
+          "timestamp": "2025-09-23T10:57:02.176Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "And for the last seven years, I've been working as a full-stack developer.",
+          "tokens": [
+            "full",
+            "full"
+          ]
+        },
+        {
+          "chunkId": "chunk-3",
+          "timestamp": "2025-09-23T10:57:01.951Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "that time on.",
+          "tokens": [
+            "time",
+            "time"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-23T10:57:02.176Z",
+      "observations": 2,
+      "topScore": 0.3333333333333333
+    },
+    "fallback-1": {
+      "id": "fallback-1",
+      "confidence": 17,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-7",
+          "timestamp": "2025-09-23T10:57:06.773Z",
+          "source": "speaker",
+          "score": 0.143,
+          "text": "building real-world user interactions.",
+          "tokens": [
+            "real",
+            "real"
+          ]
+        },
+        {
+          "chunkId": "chunk-5",
+          "timestamp": "2025-09-23T10:57:02.176Z",
+          "source": "speaker",
+          "score": 0.286,
+          "text": "And for the last seven years, I've been working as a full-stack developer.",
+          "tokens": [
+            "full",
+            "stack",
+            "full",
+            "stack"
+          ]
+        },
+        {
+          "chunkId": "chunk-3",
+          "timestamp": "2025-09-23T10:57:01.951Z",
+          "source": "speaker",
+          "score": 0.143,
+          "text": "that time on.",
+          "tokens": [
+            "time",
+            "time"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-23T10:57:06.773Z",
+      "observations": 3,
+      "topScore": 0.2857142857142857
+    },
+    "fallback-6": {
+      "id": "fallback-6",
+      "confidence": 4,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-8",
+          "timestamp": "2025-09-23T10:57:07.396Z",
+          "source": "speaker",
+          "score": 0.033,
+          "text": "based on streaming data.",
+          "tokens": [
+            "streaming"
+          ]
+        },
+        {
+          "chunkId": "chunk-7",
+          "timestamp": "2025-09-23T10:57:06.773Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "building real-world user interactions.",
+          "tokens": [
+            "building",
+            "real",
+            "building",
+            "real"
+          ]
+        },
+        {
+          "chunkId": "chunk-3",
+          "timestamp": "2025-09-23T10:57:01.951Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "that time on.",
+          "tokens": [
+            "time",
+            "that",
+            "time",
+            "that",
+            "that"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-23T10:57:07.396Z",
+      "observations": 3,
+      "topScore": 0.06666666666666667
+    },
+    "fallback-8": {
+      "id": "fallback-8",
+      "confidence": 6,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-5",
+          "timestamp": "2025-09-23T10:57:02.176Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "And for the last seven years, I've been working as a full-stack developer.",
+          "tokens": [
+            "and",
+            "and",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-3",
+          "timestamp": "2025-09-23T10:57:01.951Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "that time on.",
+          "tokens": [
+            "that",
+            "that"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-23T10:57:02.176Z",
+      "observations": 2,
+      "topScore": 0.06666666666666667
+    },
+    "fallback-9": {
+      "id": "fallback-9",
+      "confidence": 6,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-7",
+          "timestamp": "2025-09-23T10:57:06.773Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "building real-world user interactions.",
+          "tokens": [
+            "real"
+          ]
+        },
+        {
+          "chunkId": "chunk-3",
+          "timestamp": "2025-09-23T10:57:01.951Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "that time on.",
+          "tokens": [
+            "that",
+            "that"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-23T10:57:06.773Z",
+      "observations": 2,
+      "topScore": 0.06666666666666667
+    },
+    "fallback-5": {
+      "id": "fallback-5",
+      "confidence": 20,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-5",
+          "timestamp": "2025-09-23T10:57:02.176Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "And for the last seven years, I've been working as a full-stack developer.",
+          "tokens": [
+            "the",
+            "the"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-23T10:57:02.176Z",
+      "observations": 1,
+      "topScore": 0.3333333333333333
+    },
+    "fallback-10": {
+      "id": "fallback-10",
+      "confidence": 4,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-5",
+          "timestamp": "2025-09-23T10:57:02.176Z",
+          "source": "speaker",
+          "score": 0.063,
+          "text": "And for the last seven years, I've been working as a full-stack developer.",
+          "tokens": [
+            "and"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-23T10:57:02.176Z",
+      "observations": 1,
+      "topScore": 0.0625
+    }
+  },
+  "lastChunkAt": "2025-09-23T10:57:07.396Z"
+}

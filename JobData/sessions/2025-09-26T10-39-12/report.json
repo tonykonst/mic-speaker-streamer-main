@@ -1,0 +1,91 @@
+{
+  "sessionId": "2025-09-26T10-39-12",
+  "overallFit": 38,
+  "updatedAt": "2025-09-26T10:41:52.488Z",
+  "requirements": {
+    "1": {
+      "id": 1,
+      "title": "Technical Skills",
+      "verdict": "excellent",
+      "confidence": 100,
+      "reasoning": "The candidate demonstrates deep expertise in full-stack JavaScript development, streaming data pipelines, and OpenAI API integration. They have successfully implemented critical features like backpressure handling, tracing, memory leak prevention, rate limit monitoring, embedding caching, and explainable AI reasoning pipelines. This showcases strong mastery of all the key technical skills required for the role.",
+      "followUpQuestion": "What specific challenges have you faced handling high volume real-time data from live audio feeds, and how did you address them?",
+      "evidence": [
+        {
+          "text": "And for the last seven years, I've been working as a full-stack developer."
+        },
+        {
+          "text": "I'm responsible for the architecture using Node.js and Electron."
+        },
+        {
+          "text": "I moved logging and signaling to separate processes."
+        },
+        {
+          "text": "The application can handle hour-long or longer sessions without memory leaks."
+        },
+        {
+          "text": "and with clear tracing."
+        }
+      ]
+    },
+    "2": {
+      "id": 2,
+      "title": "Communication & Collaboration",
+      "verdict": "unknown",
+      "confidence": 0,
+      "reasoning": "The candidate mentioned working on product teams but there is still insufficient information to assess communication and collaboration skills in detail.",
+      "followUpQuestion": null,
+      "evidence": []
+    },
+    "3": {
+      "id": 3,
+      "title": "Experience with HR Tech",
+      "verdict": "unknown",
+      "confidence": 0,
+      "reasoning": "No new information provided about experience with HR tech specifically.",
+      "followUpQuestion": null,
+      "evidence": []
+    }
+  },
+  "groups": [
+    {
+      "id": 1,
+      "title": "Technical Skills",
+      "verdict": "excellent",
+      "confidence": 100,
+      "rationale": "The candidate demonstrates deep expertise in full-stack JavaScript development, streaming data pipelines, and OpenAI API integration. They have successfully implemented critical features like backpressure handling, tracing, memory leak prevention, rate limit monitoring, embedding caching, and explainable AI reasoning pipelines. This showcases strong mastery of all the key technical skills required for the role.",
+      "followUpQuestion": "What specific challenges have you faced handling high volume real-time data from live audio feeds, and how did you address them?",
+      "notableQuotes": [
+        "And for the last seven years, I've been working as a full-stack developer.",
+        "I'm responsible for the architecture using Node.js and Electron.",
+        "I moved logging and signaling to separate processes.",
+        "The application can handle hour-long or longer sessions without memory leaks.",
+        "and with clear tracing."
+      ],
+      "conflicts": [],
+      "lastUpdated": "2025-09-26T10:41:52.488Z"
+    },
+    {
+      "id": 2,
+      "title": "Communication & Collaboration",
+      "verdict": "unknown",
+      "confidence": 0,
+      "rationale": "The candidate mentioned working on product teams but there is still insufficient information to assess communication and collaboration skills in detail.",
+      "followUpQuestion": null,
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-26T10:41:52.488Z"
+    },
+    {
+      "id": 3,
+      "title": "Experience with HR Tech",
+      "verdict": "unknown",
+      "confidence": 0,
+      "rationale": "No new information provided about experience with HR tech specifically.",
+      "followUpQuestion": null,
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-26T10:41:52.488Z"
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "sessionId": "jd-1758625000533-97631875",
+  "groups": [
+    {
+      "id": 1,
+      "title": "Technical Skills",
+      "importance": "must-have",
+      "criteria": [
+        "5+ years building production full-stack applications (JavaScript/TypeScript, Node.js, Electron, React or similar)",
+        "Proven experience with streaming or real-time data processing (web sockets, event queues, backpressure management)",
+        "Hands-on integration experience with large language model APIs (OpenAI or equivalent) in production",
+        "Strong foundations in secure file handling, sandboxing, and IPC patterns"
+      ],
+      "successSignals": [
+        "Demonstrates mastery of full-stack JavaScript development",
+        "Provides examples of architecting real-time data pipelines at scale",
+        "Shares war stories of integrating OpenAI APIs in production",
+        "Explains security best practices for Electron apps"
+      ],
+      "riskSignals": [
+        "Lacks depth in end-to-end JavaScript application development",
+        "Cannot articulate strategies for handling high-throughput event streams",
+        "No hands-on experience with OpenAI or similar large language model APIs",
+        "Unfamiliar with techniques for securing Electron apps"
+      ],
+      "conflictSignals": [],
+      "probingQuestions": [
+        "Walk me through the end-to-end flow of the most complex full-stack JavaScript app you've built.",
+        "How have you handled backpressure and rate limiting in high-volume event streaming pipelines?",
+        "What challenges have you encountered integrating OpenAI APIs and how did you solve them?",
+        "How do you approach securing Electron apps that process sensitive data?"
+      ],
+      "successSummary": "Candidate demonstrates deep expertise across the full-stack JavaScript ecosystem with proven experience building secure, high-performance Electron apps integrated with OpenAI. Strong track record of delivering at scale.",
+      "riskSummary": "Candidate lacks sufficient depth in one or more core areas - full-stack JS, real-time streaming, OpenAI integration, or Electron security. May struggle to independently drive key components requiring this expertise."
+    },
+    {
+      "id": 2,
+      "title": "Communication & Collaboration",
+      "importance": "must-have",
+      "criteria": [
+        "Excellent communication skills and ability to document plans/process in collaborative environments",
+        "Mentor team members and participate in architecture reviews"
+      ],
+      "successSignals": [
+        "Proactively communicates status, risks, and dependencies",
+        "Produces clear technical documents, specs, and diagrams",
+        "Helps level up teammates' skills and knowledge",
+        "Constructively participates in architecture and code reviews"
+      ],
+      "riskSignals": [
+        "Struggles to keep stakeholders informed proactively",
+        "Can't distill complex topics into understandable docs",
+        "Resists or gives unconstructive feedback in reviews",
+        "Focuses only on own work without supporting team growth"
+      ],
+      "conflictSignals": [],
+      "probingQuestions": [
+        "What's your approach to keeping project stakeholders informed?",
+        "Walk me through a technical design document you created recently.",
+        "How do you help level up other engineers on your team?",
+        "What do you look for when participating in architecture reviews?"
+      ],
+      "successSummary": "Candidate is a strong communicator, creating clear docs and keeping stakeholders informed. Elevates the team through mentorship and constructive participation in reviews.",
+      "riskSummary": "Candidate doesn't communicate proactively or produce sufficiently clear docs/specs. May not collaborate effectively in reviews or support teammates' growth."
+    },
+    {
+      "id": 3,
+      "title": "Experience with HR Tech",
+      "importance": "nice-to-have",
+      "criteria": [
+        "Experience with Marketo, Greenhouse, or other HR tech integrations",
+        "Familiarity with Markdown report generation, NDJSON event logs, and analytics pipelines",
+        "Background in conversational AI, speech transcription, or voice UX"
+      ],
+      "successSignals": [
+        "Has built integrations with common HR tech platforms",
+        "Demonstrates understanding of HR reporting and analytics needs",
+        "Brings valuable insights from prior work on conversational AI"
+      ],
+      "riskSignals": [
+        "Lacks any exposure to HR tech stacks and requirements",
+        "Can't speak to reporting/analytics needs in the HR domain",
+        "No prior experience with voice/conversational AI"
+      ],
+      "conflictSignals": [],
+      "probingQuestions": [
+        "What HR tech integrations have you built in the past?",
+        "How would you approach generating usage reports for HR stakeholders?",
+        "In what ways might your conversational AI experience inform this role?"
+      ],
+      "successSummary": "Candidate brings valuable experience with HR tech, reporting/analytics, and conversational AI that will accelerate contribution and product impact.",
+      "riskSummary": "Candidate lacks direct experience with HR tech and domain-specific needs but should still be able to ramp quickly and figure it out."
+    }
+  ],
+  "jdId": "jd-1758625000533-97631875",
+  "generatedAt": "2025-09-23T10:57:22.396Z"
+}

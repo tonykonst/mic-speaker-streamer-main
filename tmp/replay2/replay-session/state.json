@@ -1,0 +1,21 @@
+{
+  "sessionId": "replay-session",
+  "updatedAt": "2025-09-23T11:17:51.697Z",
+  "overallFit": 100,
+  "planVersion": "2025-09-23T09:46:25.347Z",
+  "groups": {
+    "general-fit": {
+      "id": "general-fit",
+      "title": "General Fit",
+      "verdict": "very-strong",
+      "confidence": 100,
+      "rationale": "The candidate's latest project involving embedding caching further reinforces their strong fit for the role. This directly aligns with the key responsibility of integrating OpenAI embeddings APIs while ensuring reliability and performance. Combined with their previous highly relevant experience, the candidate demonstrates deep technical alignment and ability to deliver on the core requirements of the position.",
+      "followUpQuestion": null,
+      "notableQuotes": [
+        "I built embedding caching"
+      ],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T11:17:51.697Z"
+    }
+  }
+}

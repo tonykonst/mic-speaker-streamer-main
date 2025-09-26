@@ -1,0 +1,476 @@
+{
+  "sessionId": "2025-09-26T11-01-14",
+  "revision": 33,
+  "requirements": {
+    "fallback-4": {
+      "id": "fallback-4",
+      "confidence": 28,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-5",
+          "timestamp": "2025-09-26T11:01:29.358Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "that time on product teams.",
+          "tokens": [
+            "time",
+            "time"
+          ]
+        },
+        {
+          "chunkId": "chunk-3",
+          "timestamp": "2025-09-26T11:01:27.279Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "And for the last seven years, I've been working as a full-stack developer.",
+          "tokens": [
+            "full",
+            "full"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-26T11:01:29.358Z",
+      "observations": 2,
+      "topScore": 0.3333333333333333
+    },
+    "fallback-5": {
+      "id": "fallback-5",
+      "confidence": 33,
+      "status": "likely",
+      "evidence": [
+        {
+          "chunkId": "chunk-54",
+          "timestamp": "2025-09-26T11:03:27.201Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "while keeping the solution stable.",
+          "tokens": [
+            "the",
+            "the"
+          ]
+        },
+        {
+          "chunkId": "chunk-47",
+          "timestamp": "2025-09-26T11:03:13.756Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "and validate the HR.",
+          "tokens": [
+            "the",
+            "the"
+          ]
+        },
+        {
+          "chunkId": "chunk-38",
+          "timestamp": "2025-09-26T11:02:55.938Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "and the user could see why the conclusion was reached.",
+          "tokens": [
+            "the",
+            "the"
+          ]
+        },
+        {
+          "chunkId": "chunk-37",
+          "timestamp": "2025-09-26T11:02:51.868Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "Each decision was based on specific excerpts from the transcript.",
+          "tokens": [
+            "the",
+            "the"
+          ]
+        },
+        {
+          "chunkId": "chunk-36",
+          "timestamp": "2025-09-26T11:02:47.908Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "and organized the reasoning pipeline so that LLM decisions were explainable.",
+          "tokens": [
+            "the",
+            "the"
+          ]
+        },
+        {
+          "chunkId": "chunk-33",
+          "timestamp": "2025-09-26T11:02:39.169Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "In the latest project...",
+          "tokens": [
+            "the",
+            "the"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-26T11:03:27.201Z",
+      "observations": 11,
+      "topScore": 0.3333333333333333
+    },
+    "fallback-1": {
+      "id": "fallback-1",
+      "confidence": 15,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-30",
+          "timestamp": "2025-09-26T11:02:35.096Z",
+          "source": "speaker",
+          "score": 0.143,
+          "text": "Real-time.",
+          "tokens": [
+            "real",
+            "real"
+          ]
+        },
+        {
+          "chunkId": "chunk-6",
+          "timestamp": "2025-09-26T11:01:32.713Z",
+          "source": "speaker",
+          "score": 0.143,
+          "text": "building real-world user interactions.",
+          "tokens": [
+            "real",
+            "real"
+          ]
+        },
+        {
+          "chunkId": "chunk-5",
+          "timestamp": "2025-09-26T11:01:29.358Z",
+          "source": "speaker",
+          "score": 0.143,
+          "text": "that time on product teams.",
+          "tokens": [
+            "time",
+            "time"
+          ]
+        },
+        {
+          "chunkId": "chunk-3",
+          "timestamp": "2025-09-26T11:01:27.279Z",
+          "source": "speaker",
+          "score": 0.286,
+          "text": "And for the last seven years, I've been working as a full-stack developer.",
+          "tokens": [
+            "full",
+            "stack",
+            "full",
+            "stack"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-26T11:02:35.096Z",
+      "observations": 4,
+      "topScore": 0.2857142857142857
+    },
+    "fallback-8": {
+      "id": "fallback-8",
+      "confidence": 7,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-51",
+          "timestamp": "2025-09-26T11:03:21.333Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "and well-designed you.",
+          "tokens": [
+            "and",
+            "and",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-49",
+          "timestamp": "2025-09-26T11:03:18.230Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "I believe that my experience in streaming data processing...",
+          "tokens": [
+            "that",
+            "that"
+          ]
+        },
+        {
+          "chunkId": "chunk-47",
+          "timestamp": "2025-09-26T11:03:13.756Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "and validate the HR.",
+          "tokens": [
+            "and",
+            "and",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-43",
+          "timestamp": "2025-09-26T11:03:03.651Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "testing, and monitoring in mind.",
+          "tokens": [
+            "and",
+            "and",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-41",
+          "timestamp": "2025-09-26T11:03:01.803Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "I developed features with logging,",
+          "tokens": [
+            "features",
+            "features"
+          ]
+        },
+        {
+          "chunkId": "chunk-38",
+          "timestamp": "2025-09-26T11:02:55.938Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "and the user could see why the conclusion was reached.",
+          "tokens": [
+            "and",
+            "and",
+            "and"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-26T11:03:21.333Z",
+      "observations": 20,
+      "topScore": 0.13333333333333333
+    },
+    "fallback-10": {
+      "id": "fallback-10",
+      "confidence": 7,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-51",
+          "timestamp": "2025-09-26T11:03:21.333Z",
+          "source": "speaker",
+          "score": 0.063,
+          "text": "and well-designed you.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-47",
+          "timestamp": "2025-09-26T11:03:13.756Z",
+          "source": "speaker",
+          "score": 0.063,
+          "text": "and validate the HR.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-43",
+          "timestamp": "2025-09-26T11:03:03.651Z",
+          "source": "speaker",
+          "score": 0.063,
+          "text": "testing, and monitoring in mind.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-41",
+          "timestamp": "2025-09-26T11:03:01.803Z",
+          "source": "speaker",
+          "score": 0.063,
+          "text": "I developed features with logging,",
+          "tokens": [
+            "with",
+            "with"
+          ]
+        },
+        {
+          "chunkId": "chunk-38",
+          "timestamp": "2025-09-26T11:02:55.938Z",
+          "source": "speaker",
+          "score": 0.063,
+          "text": "and the user could see why the conclusion was reached.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-36",
+          "timestamp": "2025-09-26T11:02:47.908Z",
+          "source": "speaker",
+          "score": 0.063,
+          "text": "and organized the reasoning pipeline so that LLM decisions were explainable.",
+          "tokens": [
+            "and"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-26T11:03:21.333Z",
+      "observations": 20,
+      "topScore": 0.125
+    },
+    "fallback-6": {
+      "id": "fallback-6",
+      "confidence": 6,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-53",
+          "timestamp": "2025-09-26T11:03:24.932Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "a live interview toolkit.",
+          "tokens": [
+            "interview",
+            "interview",
+            "live"
+          ]
+        },
+        {
+          "chunkId": "chunk-51",
+          "timestamp": "2025-09-26T11:03:21.333Z",
+          "source": "speaker",
+          "score": 0.033,
+          "text": "and well-designed you.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-49",
+          "timestamp": "2025-09-26T11:03:18.230Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "I believe that my experience in streaming data processing...",
+          "tokens": [
+            "that",
+            "that",
+            "that",
+            "streaming"
+          ]
+        },
+        {
+          "chunkId": "chunk-47",
+          "timestamp": "2025-09-26T11:03:13.756Z",
+          "source": "speaker",
+          "score": 0.033,
+          "text": "and validate the HR.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-43",
+          "timestamp": "2025-09-26T11:03:03.651Z",
+          "source": "speaker",
+          "score": 0.033,
+          "text": "testing, and monitoring in mind.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-41",
+          "timestamp": "2025-09-26T11:03:01.803Z",
+          "source": "speaker",
+          "score": 0.033,
+          "text": "I developed features with logging,",
+          "tokens": [
+            "features"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-26T11:03:24.932Z",
+      "observations": 24,
+      "topScore": 0.13333333333333333
+    },
+    "fallback-9": {
+      "id": "fallback-9",
+      "confidence": 12,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-49",
+          "timestamp": "2025-09-26T11:03:18.230Z",
+          "source": "speaker",
+          "score": 0.133,
+          "text": "I believe that my experience in streaming data processing...",
+          "tokens": [
+            "data",
+            "that",
+            "data",
+            "that"
+          ]
+        },
+        {
+          "chunkId": "chunk-36",
+          "timestamp": "2025-09-26T11:02:47.908Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "and organized the reasoning pipeline so that LLM decisions were explainable.",
+          "tokens": [
+            "that",
+            "that"
+          ]
+        },
+        {
+          "chunkId": "chunk-30",
+          "timestamp": "2025-09-26T11:02:35.096Z",
+          "source": "speaker",
+          "score": 0.133,
+          "text": "Real-time.",
+          "tokens": [
+            "real",
+            "time."
+          ]
+        },
+        {
+          "chunkId": "chunk-9",
+          "timestamp": "2025-09-26T11:01:40.860Z",
+          "source": "speaker",
+          "score": 0.133,
+          "text": "we're building a platform that analyzes live audio feeds from meetings.",
+          "tokens": [
+            "that",
+            "audio",
+            "that",
+            "audio"
+          ]
+        },
+        {
+          "chunkId": "chunk-6",
+          "timestamp": "2025-09-26T11:01:32.713Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "building real-world user interactions.",
+          "tokens": [
+            "real"
+          ]
+        },
+        {
+          "chunkId": "chunk-5",
+          "timestamp": "2025-09-26T11:01:29.358Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "that time on product teams.",
+          "tokens": [
+            "that",
+            "that"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-26T11:03:18.230Z",
+      "observations": 6,
+      "topScore": 0.13333333333333333
+    }
+  },
+  "lastChunkAt": "2025-09-26T11:03:27.201Z"
+}

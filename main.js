@@ -10,9 +10,17 @@ dotenv.config();
 
 initAudioLoopback();
 
+const appConfig = require('./config');
+const { ClaudeClient } = require('./src/services/claudeClient');
+const { EvaluationPlanService } = require('./src/services/evaluationPlan');
+const { ClaudeEvaluationOrchestrator } = require('./src/services/evaluationOrchestrator');
+
 const LOG_ROOT = path.resolve('./Logs');
 const JOB_DATA_ROOT = path.resolve('./JobData');
 const JOB_SESSION_ROOT = path.join(JOB_DATA_ROOT, 'sessions');
+const V2_ROOT = path.join(JOB_DATA_ROOT, 'v2');
+const JD_PLAN_ROOT = path.join(V2_ROOT, 'jd');
+const EVALUATION_PLAN_FILE = 'evaluation_plan.json';
 const JD_POINTER_FILE = 'active.json';
 const JD_MARKDOWN_FILE = 'jd.md';
 const JD_META_FILE = 'jd.meta.json';
@@ -266,6 +274,20 @@ const logManager = new LogManager(LOG_ROOT, {
   highWaterMark: 64 * 1024,
 });
 
+const claudeClient = new ClaudeClient({
+  apiKey: appConfig.claudeApiKey,
+  apiVersion: appConfig.claudeApiVersion,
+});
+
+const evaluationPlanService = new EvaluationPlanService({
+  claudeClient,
+  logger: console,
+  model: appConfig.claudeModel,
+});
+
+const useClaudeCoach = Boolean(appConfig.useClaudeCoach && evaluationPlanService.isEnabled);
+let activeEvaluationPlan = null;
+
 function hashText(text) {
   return createHash('sha256').update(text, 'utf8').digest('hex');
 }
@@ -285,6 +307,64 @@ async function readJsonSafe(filePath) {
 async function writeJson(filePath, data) {
   const json = JSON.stringify(data, null, 2);
   await fs.promises.writeFile(filePath, `${json}\n`, 'utf8');
+}
+
+async function ensureV2Roots() {
+  await fs.promises.mkdir(JD_PLAN_ROOT, { recursive: true });
+}
+
+async function saveEvaluationPlan(jdId, plan) {
+  if (!plan || !jdId) {
+    return null;
+  }
+  await ensureV2Roots();
+  const dir = path.join(JD_PLAN_ROOT, sanitizeSegment(jdId, 'jdId'));
+  await fs.promises.mkdir(dir, { recursive: true });
+  const filePath = path.join(dir, EVALUATION_PLAN_FILE);
+  await writeJson(filePath, plan);
+  return filePath;
+}
+
+async function loadEvaluationPlan(jdId) {
+  if (!jdId) {
+    return null;
+  }
+  const dir = path.join(JD_PLAN_ROOT, sanitizeSegment(jdId, 'jdId'));
+  const filePath = path.join(dir, EVALUATION_PLAN_FILE);
+  return await readJsonSafe(filePath);
+}
+
+async function upsertEvaluationPlan(jdData, { regenerate = false } = {}) {
+  if (!jdData || !jdData.jdId) {
+    return { plan: null, generated: false };
+  }
+
+  if (!regenerate) {
+    const existing = await loadEvaluationPlan(jdData.jdId);
+    if (existing) {
+      return { plan: existing, generated: false };
+    }
+  }
+
+  if (!useClaudeCoach) {
+    return { plan: await loadEvaluationPlan(jdData.jdId), generated: false };
+  }
+
+  const generatedPlan = await evaluationPlanService.generatePlan({
+    jdText: jdData.text,
+    sessionId: jdData.jdId,
+  });
+
+  if (generatedPlan) {
+    generatedPlan.jdId = jdData.jdId;
+    if (!generatedPlan.generatedAt) {
+      generatedPlan.generatedAt = new Date().toISOString();
+    }
+    await saveEvaluationPlan(jdData.jdId, generatedPlan);
+    return { plan: generatedPlan, generated: true };
+  }
+
+  return { plan: null, generated: false };
 }
 
 class JDManager {
@@ -1200,12 +1280,32 @@ class ReasoningEngine extends EventEmitter {
 
 const reasoningEngine = new ReasoningEngine(JOB_SESSION_ROOT);
 const evidenceTracker = new EvidenceTracker(JOB_SESSION_ROOT);
+const evaluationOrchestrator = useClaudeCoach
+  ? new ClaudeEvaluationOrchestrator({
+      claudeClient,
+      rootDir: path.join(V2_ROOT, 'sessions'),
+      model: appConfig.claudeModel,
+      logger: console,
+    })
+  : null;
 
 async function bootstrapEvidenceTracker() {
   const active = await jdManager.getActive();
   if (active) {
     await evidenceTracker.handleJDUpdate(active);
     await reasoningEngine.handleJDUpdate(active);
+    try {
+      const { plan } = await upsertEvaluationPlan(active, { regenerate: false });
+      if (plan) {
+        activeEvaluationPlan = plan;
+        if (useClaudeCoach) {
+          evaluationOrchestrator?.setActivePlan(plan);
+        }
+        broadcast('jd-evaluation-plan', { jdId: active.jdId, plan });
+      }
+    } catch (error) {
+      console.error('Bootstrap evaluation plan failed:', error);
+    }
   }
 }
 
@@ -1230,6 +1330,7 @@ function convertReasoningPayload(payload) {
       updatedAt: null,
       revision: 0,
       requirements: {},
+      groups: [],
     };
   }
   const mapped = {
@@ -1238,12 +1339,80 @@ function convertReasoningPayload(payload) {
     updatedAt: payload.updatedAt ?? null,
     revision: payload.revision ?? 0,
     requirements: {},
+    groups: [],
   };
-  if (Array.isArray(payload.requirements)) {
-    for (const item of payload.requirements) {
-      mapped.requirements[item.id] = {
-        ...item,
+  if (Array.isArray(payload.groups)) {
+    mapped.groups = payload.groups.map((group) => ({
+      id: group.id || group.groupId,
+      title: group.title || group.id,
+      verdict: group.verdict || group.status || 'unknown',
+      confidence: group.confidence ?? 0,
+      rationale: group.rationale || '',
+      followUpQuestion: group.followUpQuestion || null,
+      notableQuotes: group.notableQuotes || [],
+      conflicts: group.conflicts || [],
+      lastUpdated: group.lastUpdated || mapped.updatedAt,
+    }));
+    mapped.groups.forEach((group) => {
+      mapped.requirements[group.id] = {
+        id: group.id,
+        title: group.title,
+        verdict: group.verdict,
+        confidence: group.confidence,
+        reasoning: group.rationale,
+        followUpQuestion: group.followUpQuestion,
+        evidence: (group.notableQuotes || []).map((quote) => ({ text: quote })),
       };
+    });
+  } else if (payload.groups && typeof payload.groups === 'object') {
+    const arrayFromMap = Object.values(payload.groups).map((group) => ({
+      id: group.id || group.groupId,
+      title: group.title || group.id,
+      verdict: group.verdict || group.status || 'unknown',
+      confidence: group.confidence ?? 0,
+      rationale: group.rationale || '',
+      followUpQuestion: group.followUpQuestion || null,
+      notableQuotes: group.notableQuotes || [],
+      conflicts: group.conflicts || [],
+      lastUpdated: group.lastUpdated || mapped.updatedAt,
+    }));
+    mapped.groups = arrayFromMap;
+    arrayFromMap.forEach((group) => {
+      mapped.requirements[group.id] = {
+        id: group.id,
+        title: group.title,
+        verdict: group.verdict,
+        confidence: group.confidence,
+        reasoning: group.rationale,
+        followUpQuestion: group.followUpQuestion,
+        evidence: (group.notableQuotes || []).map((quote) => ({ text: quote })),
+      };
+    });
+  }
+
+  if (!mapped.groups.length && Array.isArray(payload.requirements)) {
+    mapped.groups = payload.requirements.map((item) => ({
+      id: item.id,
+      title: item.title || item.id,
+      verdict: item.verdict || item.status || 'unknown',
+      confidence: item.confidence ?? 0,
+      rationale: item.reasoning || '',
+      followUpQuestion: item.followUpQuestion || null,
+      notableQuotes: Array.isArray(item.evidence)
+        ? item.evidence.map((evidence) => evidence.text).filter(Boolean)
+        : [],
+      conflicts: [],
+      lastUpdated: item.lastUpdated || mapped.updatedAt,
+    }));
+  }
+
+  if (!mapped.requirements || !Object.keys(mapped.requirements).length) {
+    if (Array.isArray(payload.requirements)) {
+      for (const item of payload.requirements) {
+        mapped.requirements[item.id] = {
+          ...item,
+        };
+      }
     }
   }
   return mapped;
@@ -1251,21 +1420,38 @@ function convertReasoningPayload(payload) {
 
 evidenceTracker.on('state-changed', (payload) => {
   broadcast('evidence-updated', payload);
-  void reasoningEngine.handleEvidenceUpdate(payload);
+  if (!useClaudeCoach) {
+    void reasoningEngine.handleEvidenceUpdate(payload);
+  }
 });
 
 evidenceTracker.on('jd-updated', (payload) => {
   broadcast('jd-evidence-updated', payload);
 });
 
-reasoningEngine.on('update', (payload) => {
-  broadcast('reasoning-update', payload);
-  void reportManager.handleReasoningUpdate(payload);
-});
+if (useClaudeCoach && evaluationOrchestrator) {
+  evaluationOrchestrator.on('update', (payload) => {
+    broadcast('reasoning-update', payload);
+    void reportManager.handleReasoningUpdate(payload);
+  });
 
-reasoningEngine.on('guidance', (payload) => {
-  broadcast('guidance-prompt', payload);
-});
+  evaluationOrchestrator.on('guidance', (payload) => {
+    broadcast('guidance-prompt', payload);
+  });
+
+  evaluationOrchestrator.on('conflict', (payload) => {
+    broadcast('evaluation-conflict', payload);
+  });
+} else {
+  reasoningEngine.on('update', (payload) => {
+    broadcast('reasoning-update', payload);
+    void reportManager.handleReasoningUpdate(payload);
+  });
+
+  reasoningEngine.on('guidance', (payload) => {
+    broadcast('guidance-prompt', payload);
+  });
+}
 
 class ReportManager {
   constructor(rootDir) {
@@ -1475,10 +1661,30 @@ ipcMain.handle('get-log-status', async (_event, sessionId, type) => {
 
 ipcMain.handle('jd-set-text', async (_event, text, options = {}) => {
   try {
-    const result = await jdManager.setJD({ text, source: options.source });
-    await evidenceTracker.handleJDUpdate(result);
-    await reasoningEngine.handleJDUpdate(result);
-    return { success: true, data: result };
+    const jdData = await jdManager.setJD({ text, source: options.source });
+    await evidenceTracker.handleJDUpdate(jdData);
+    await reasoningEngine.handleJDUpdate(jdData);
+
+    let evaluationPlan = null;
+    try {
+      const { plan } = await upsertEvaluationPlan(jdData, { regenerate: true });
+      evaluationPlan = plan;
+    } catch (planError) {
+      console.error('Failed to generate evaluation plan:', planError);
+    }
+
+    const payload = { ...jdData, evaluationPlan };
+
+    if (evaluationPlan) {
+      broadcast('jd-evaluation-plan', { jdId: jdData.jdId, plan: evaluationPlan });
+    }
+
+    if (useClaudeCoach) {
+      activeEvaluationPlan = evaluationPlan;
+      evaluationOrchestrator?.setActivePlan(evaluationPlan);
+    }
+
+    return { success: true, data: payload };
   } catch (error) {
     console.error('Error setting JD text:', error);
     return { success: false, error: error.message };
@@ -1487,12 +1693,27 @@ ipcMain.handle('jd-set-text', async (_event, text, options = {}) => {
 
 ipcMain.handle('jd-get-active', async () => {
   try {
-    const result = await jdManager.getActive();
-    if (result) {
-      await evidenceTracker.handleJDUpdate(result);
-      await reasoningEngine.handleJDUpdate(result);
+    const jdData = await jdManager.getActive();
+    if (jdData) {
+      await evidenceTracker.handleJDUpdate(jdData);
+      await reasoningEngine.handleJDUpdate(jdData);
+      let evaluationPlan = null;
+      try {
+        const { plan } = await upsertEvaluationPlan(jdData, { regenerate: false });
+        evaluationPlan = plan;
+      } catch (planError) {
+        console.error('Failed to load evaluation plan:', planError);
+      }
+      if (evaluationPlan) {
+        broadcast('jd-evaluation-plan', { jdId: jdData.jdId, plan: evaluationPlan });
+      }
+      if (useClaudeCoach) {
+        activeEvaluationPlan = evaluationPlan;
+        evaluationOrchestrator?.setActivePlan(evaluationPlan);
+      }
+      return { success: true, data: { ...jdData, evaluationPlan } };
     }
-    return { success: true, data: result };
+    return { success: true, data: null };
   } catch (error) {
     console.error('Error reading active JD:', error);
     return { success: false, error: error.message };
@@ -1504,6 +1725,11 @@ ipcMain.handle('jd-clear', async () => {
     const result = await jdManager.clear();
     await evidenceTracker.clearJD();
     await reasoningEngine.clearJD();
+    broadcast('jd-evaluation-plan', { jdId: null, plan: null });
+    if (useClaudeCoach) {
+      activeEvaluationPlan = null;
+      evaluationOrchestrator?.setActivePlan(null);
+    }
     return { success: true, data: result };
   } catch (error) {
     console.error('Error clearing JD:', error);
@@ -1513,11 +1739,16 @@ ipcMain.handle('jd-clear', async () => {
 
 ipcMain.on('transcript-chunk', (_event, chunk) => {
   void evidenceTracker.recordChunk(chunk);
+  if (useClaudeCoach) {
+    void evaluationOrchestrator.enqueueChunk(chunk);
+  }
 });
 
 ipcMain.handle('reasoning-get-state', async (_event, sessionId) => {
   try {
-    const result = await reasoningEngine.getState(sessionId);
+    const result = useClaudeCoach && evaluationOrchestrator
+      ? await evaluationOrchestrator.getState(sessionId)
+      : await reasoningEngine.getState(sessionId);
     return { success: true, data: result };
   } catch (error) {
     console.error('Error fetching reasoning state:', error);
@@ -1564,6 +1795,9 @@ app.on('before-quit', () => {
   }
   void evidenceTracker.flushAll();
   void reasoningEngine.flushAll();
+  if (useClaudeCoach && evaluationOrchestrator) {
+    void evaluationOrchestrator.flushAll();
+  }
   void reportManager.flushAll();
 });
 

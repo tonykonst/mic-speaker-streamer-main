@@ -34,5 +34,15 @@ contextBridge.exposeInMainWorld('electronAPI', {
     ipcRenderer.on('guidance-prompt', listener);
     return () => ipcRenderer.removeListener('guidance-prompt', listener);
   },
+  onJDEvaluationPlan: (handler) => {
+    const listener = (_event, data) => handler?.(data);
+    ipcRenderer.on('jd-evaluation-plan', listener);
+    return () => ipcRenderer.removeListener('jd-evaluation-plan', listener);
+  },
+  onEvaluationConflict: (handler) => {
+    const listener = (_event, data) => handler?.(data);
+    ipcRenderer.on('evaluation-conflict', listener);
+    return () => ipcRenderer.removeListener('evaluation-conflict', listener);
+  },
   exportReport: (sessionId) => ipcRenderer.invoke('export-report', sessionId),
 });

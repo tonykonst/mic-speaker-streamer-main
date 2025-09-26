@@ -1,0 +1,21 @@
+{
+  "sessionId": "jd-1758218519069-97631875",
+  "generatedAt": "2025-09-23T09:40:34.325Z",
+  "groups": [
+    {
+      "id": "general-fit",
+      "title": "General Fit",
+      "importance": "must-have",
+      "criteria": [
+        "Senior Full-Stack Engineer (Real-Time AI Platforms) Company: InsightLoop.ai Location: Hybrid (San Francisco, CA) Type: Full-time About the Role We’re building a real-time interview intelligence platform that scores candidates against live Job Descriptions. You’ll own end-to-end delivery of features that ingest JD inputs, run streaming analysis, and surface actionable insights to our users. Key Responsibilities Design, build, and maintain Electron/Node.js features that capture JD inputs, stream telemetry, and write persistent reports. Implement high-performance data pipelines that transform audio transcripts into structured evidence in near-real time. Integrate OpenAI Realtime/Responses/Embeddings APIs with strong attention to reliability, rate limits, and security compliance."
+      ],
+      "successSignals": [],
+      "riskSignals": [],
+      "conflictSignals": [],
+      "probingQuestions": [],
+      "successSummary": "",
+      "riskSummary": ""
+    }
+  ],
+  "jdId": "jd-1758218519069-97631875"
+}

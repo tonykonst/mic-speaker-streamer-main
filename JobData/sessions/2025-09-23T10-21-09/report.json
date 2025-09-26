@@ -1,0 +1,409 @@
+{
+  "sessionId": "2025-09-23T10-21-09",
+  "overallFit": 0,
+  "updatedAt": "2025-09-23T10:22:04.041Z",
+  "requirements": {
+    "key-responsibilities-1": {
+      "id": "key-responsibilities-1",
+      "title": "Design, build, and maintain Electron/Node.js features that capture JD inputs, st",
+      "verdict": "unknown",
+      "confidence": 0,
+      "reasoning": "Design, build, and maintain Electron/Node.js features that capture JD inputs, stream telemetry, and write persistent reports.",
+      "followUpQuestion": "Can you elaborate on design, build, and maintain electron/node.js features that capture jd inputs, st?",
+      "evidence": []
+    },
+    "key-responsibilities-2": {
+      "id": "key-responsibilities-2",
+      "title": "Implement high-performance data pipelines that transform audio transcripts into ",
+      "verdict": "unknown",
+      "confidence": 0,
+      "reasoning": "Implement high-performance data pipelines that transform audio transcripts into structured evidence in near-real time.",
+      "followUpQuestion": "Can you elaborate on implement high-performance data pipelines that transform audio transcripts into ?",
+      "evidence": []
+    },
+    "key-responsibilities-3": {
+      "id": "key-responsibilities-3",
+      "title": "Integrate OpenAI Realtime/Responses/Embeddings APIs with strong attention to rel",
+      "verdict": "unknown",
+      "confidence": 0,
+      "reasoning": "Integrate OpenAI Realtime/Responses/Embeddings APIs with strong attention to reliability, rate limits, and security compliance.",
+      "followUpQuestion": "Can you elaborate on integrate openai realtime/responses/embeddings apis with strong attention to rel?",
+      "evidence": []
+    },
+    "key-responsibilities-4": {
+      "id": "key-responsibilities-4",
+      "title": "Collaborate with product and design to deliver intuitive workflows using existin",
+      "verdict": "unknown",
+      "confidence": 0,
+      "reasoning": "Collaborate with product and design to deliver intuitive workflows using existing UI components (minimal new styling).",
+      "followUpQuestion": "Can you elaborate on collaborate with product and design to deliver intuitive workflows using existin?",
+      "evidence": []
+    },
+    "key-responsibilities-5": {
+      "id": "key-responsibilities-5",
+      "title": "Establish automated testing and monitoring to ensure production readiness for lo",
+      "verdict": "unknown",
+      "confidence": 0,
+      "reasoning": "Establish automated testing and monitoring to ensure production readiness for long-running interview sessions.",
+      "followUpQuestion": "Can you elaborate on establish automated testing and monitoring to ensure production readiness for lo?",
+      "evidence": []
+    },
+    "key-responsibilities-6": {
+      "id": "key-responsibilities-6",
+      "title": "Mentor team members and participate in architecture reviews.",
+      "verdict": "unknown",
+      "confidence": 0,
+      "reasoning": "Mentor team members and participate in architecture reviews.",
+      "followUpQuestion": "Can you elaborate on mentor team members and participate in architecture reviews.?",
+      "evidence": []
+    },
+    "must-have-qualifications-7": {
+      "id": "must-have-qualifications-7",
+      "title": "5+ years building production full-stack applications (JavaScript/TypeScript, Nod",
+      "verdict": "unknown",
+      "confidence": 0,
+      "reasoning": "5+ years building production full-stack applications (JavaScript/TypeScript, Node.js, Electron, React or similar).",
+      "followUpQuestion": "Can you elaborate on 5+ years building production full-stack applications (javascript/typescript, nod?",
+      "evidence": []
+    },
+    "must-have-qualifications-8": {
+      "id": "must-have-qualifications-8",
+      "title": "Proven experience with streaming or real-time data processing (web sockets, even",
+      "verdict": "unknown",
+      "confidence": 0,
+      "reasoning": "Proven experience with streaming or real-time data processing (web sockets, event queues, backpressure management).",
+      "followUpQuestion": "Can you elaborate on proven experience with streaming or real-time data processing (web sockets, even?",
+      "evidence": []
+    },
+    "must-have-qualifications-9": {
+      "id": "must-have-qualifications-9",
+      "title": "Hands-on integration experience with large language model APIs (OpenAI or equiva",
+      "verdict": "unknown",
+      "confidence": 0,
+      "reasoning": "Hands-on integration experience with large language model APIs (OpenAI or equivalent) in production.",
+      "followUpQuestion": "Can you elaborate on hands-on integration experience with large language model apis (openai or equiva?",
+      "evidence": []
+    },
+    "must-have-qualifications-10": {
+      "id": "must-have-qualifications-10",
+      "title": "Strong foundations in secure file handling, sandboxing, and IPC patterns.",
+      "verdict": "unknown",
+      "confidence": 0,
+      "reasoning": "Strong foundations in secure file handling, sandboxing, and IPC patterns.",
+      "followUpQuestion": "Can you elaborate on strong foundations in secure file handling, sandboxing, and ipc patterns.?",
+      "evidence": []
+    },
+    "must-have-qualifications-11": {
+      "id": "must-have-qualifications-11",
+      "title": "Excellent communication skills and ability to document plans/process in collabor",
+      "verdict": "unknown",
+      "confidence": 0,
+      "reasoning": "Excellent communication skills and ability to document plans/process in collaborative environments.",
+      "followUpQuestion": "Can you elaborate on excellent communication skills and ability to document plans/process in collabor?",
+      "evidence": []
+    },
+    "nice-to-have-12": {
+      "id": "nice-to-have-12",
+      "title": "Experience with Marketo, Greenhouse, or other HR tech integrations.",
+      "verdict": "unknown",
+      "confidence": 0,
+      "reasoning": "Experience with Marketo, Greenhouse, or other HR tech integrations.",
+      "followUpQuestion": "Can you elaborate on experience with marketo, greenhouse, or other hr tech integrations.?",
+      "evidence": []
+    },
+    "nice-to-have-13": {
+      "id": "nice-to-have-13",
+      "title": "Familiarity with Markdown report generation, NDJSON event logs, and analytics pi",
+      "verdict": "unknown",
+      "confidence": 0,
+      "reasoning": "Familiarity with Markdown report generation, NDJSON event logs, and analytics pipelines.",
+      "followUpQuestion": "Can you elaborate on familiarity with markdown report generation, ndjson event logs, and analytics pi?",
+      "evidence": []
+    },
+    "nice-to-have-14": {
+      "id": "nice-to-have-14",
+      "title": "Background in conversational AI, speech transcription, or voice UX.",
+      "verdict": "unknown",
+      "confidence": 0,
+      "reasoning": "Background in conversational AI, speech transcription, or voice UX.",
+      "followUpQuestion": "Can you elaborate on background in conversational ai, speech transcription, or voice ux.?",
+      "evidence": []
+    },
+    "nice-to-have-15": {
+      "id": "nice-to-have-15",
+      "title": "What Success Looks Like (First 90 Days)",
+      "verdict": "unknown",
+      "confidence": 0,
+      "reasoning": "What Success Looks Like (First 90 Days)",
+      "followUpQuestion": "Can you elaborate on what success looks like (first 90 days)?",
+      "evidence": []
+    },
+    "nice-to-have-16": {
+      "id": "nice-to-have-16",
+      "title": "Deliver JD ingestion + requirement extraction subsystem with persisted metadata ",
+      "verdict": "unknown",
+      "confidence": 0,
+      "reasoning": "Deliver JD ingestion + requirement extraction subsystem with persisted metadata and embeddings.",
+      "followUpQuestion": "Can you elaborate on deliver jd ingestion + requirement extraction subsystem with persisted metadata ?",
+      "evidence": []
+    },
+    "nice-to-have-17": {
+      "id": "nice-to-have-17",
+      "title": "Implement evidence tracker capable of replaying interview transcripts into struc",
+      "verdict": "unknown",
+      "confidence": 0,
+      "reasoning": "Implement evidence tracker capable of replaying interview transcripts into structured events.",
+      "followUpQuestion": "Can you elaborate on implement evidence tracker capable of replaying interview transcripts into struc?",
+      "evidence": []
+    },
+    "nice-to-have-18": {
+      "id": "nice-to-have-18",
+      "title": "Collaborate with the reasoning team to ship a “live coaching” beta that surfaces",
+      "verdict": "unknown",
+      "confidence": 0,
+      "reasoning": "Collaborate with the reasoning team to ship a “live coaching” beta that surfaces prompts with <3s latency.",
+      "followUpQuestion": "Can you elaborate on collaborate with the reasoning team to ship a “live coaching” beta that surfaces?",
+      "evidence": []
+    },
+    "nice-to-have-19": {
+      "id": "nice-to-have-19",
+      "title": "Establish observability dashboards tracking pipeline health, API errors, and cos",
+      "verdict": "unknown",
+      "confidence": 0,
+      "reasoning": "Establish observability dashboards tracking pipeline health, API errors, and cost metrics.",
+      "followUpQuestion": "Can you elaborate on establish observability dashboards tracking pipeline health, api errors, and cos?",
+      "evidence": []
+    },
+    "nice-to-have-20": {
+      "id": "nice-to-have-20",
+      "title": "Use this as a “test JD” whenever you need to feed the new JD ingestion/scoring f",
+      "verdict": "unknown",
+      "confidence": 0,
+      "reasoning": "Use this as a “test JD” whenever you need to feed the new JD ingestion/scoring flows.",
+      "followUpQuestion": "Can you elaborate on use this as a “test jd” whenever you need to feed the new jd ingestion/scoring f?",
+      "evidence": []
+    }
+  },
+  "groups": [
+    {
+      "id": "key-responsibilities-1",
+      "title": "Design, build, and maintain Electron/Node.js features that capture JD inputs, st",
+      "verdict": "unknown",
+      "confidence": 0,
+      "rationale": "Design, build, and maintain Electron/Node.js features that capture JD inputs, stream telemetry, and write persistent reports.",
+      "followUpQuestion": "Can you elaborate on design, build, and maintain electron/node.js features that capture jd inputs, st?",
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T10:22:04.041Z"
+    },
+    {
+      "id": "key-responsibilities-2",
+      "title": "Implement high-performance data pipelines that transform audio transcripts into ",
+      "verdict": "unknown",
+      "confidence": 0,
+      "rationale": "Implement high-performance data pipelines that transform audio transcripts into structured evidence in near-real time.",
+      "followUpQuestion": "Can you elaborate on implement high-performance data pipelines that transform audio transcripts into ?",
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T10:22:04.041Z"
+    },
+    {
+      "id": "key-responsibilities-3",
+      "title": "Integrate OpenAI Realtime/Responses/Embeddings APIs with strong attention to rel",
+      "verdict": "unknown",
+      "confidence": 0,
+      "rationale": "Integrate OpenAI Realtime/Responses/Embeddings APIs with strong attention to reliability, rate limits, and security compliance.",
+      "followUpQuestion": "Can you elaborate on integrate openai realtime/responses/embeddings apis with strong attention to rel?",
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T10:22:04.041Z"
+    },
+    {
+      "id": "key-responsibilities-4",
+      "title": "Collaborate with product and design to deliver intuitive workflows using existin",
+      "verdict": "unknown",
+      "confidence": 0,
+      "rationale": "Collaborate with product and design to deliver intuitive workflows using existing UI components (minimal new styling).",
+      "followUpQuestion": "Can you elaborate on collaborate with product and design to deliver intuitive workflows using existin?",
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T10:22:04.041Z"
+    },
+    {
+      "id": "key-responsibilities-5",
+      "title": "Establish automated testing and monitoring to ensure production readiness for lo",
+      "verdict": "unknown",
+      "confidence": 0,
+      "rationale": "Establish automated testing and monitoring to ensure production readiness for long-running interview sessions.",
+      "followUpQuestion": "Can you elaborate on establish automated testing and monitoring to ensure production readiness for lo?",
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T10:22:04.041Z"
+    },
+    {
+      "id": "key-responsibilities-6",
+      "title": "Mentor team members and participate in architecture reviews.",
+      "verdict": "unknown",
+      "confidence": 0,
+      "rationale": "Mentor team members and participate in architecture reviews.",
+      "followUpQuestion": "Can you elaborate on mentor team members and participate in architecture reviews.?",
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T10:22:04.041Z"
+    },
+    {
+      "id": "must-have-qualifications-7",
+      "title": "5+ years building production full-stack applications (JavaScript/TypeScript, Nod",
+      "verdict": "unknown",
+      "confidence": 0,
+      "rationale": "5+ years building production full-stack applications (JavaScript/TypeScript, Node.js, Electron, React or similar).",
+      "followUpQuestion": "Can you elaborate on 5+ years building production full-stack applications (javascript/typescript, nod?",
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T10:22:04.041Z"
+    },
+    {
+      "id": "must-have-qualifications-8",
+      "title": "Proven experience with streaming or real-time data processing (web sockets, even",
+      "verdict": "unknown",
+      "confidence": 0,
+      "rationale": "Proven experience with streaming or real-time data processing (web sockets, event queues, backpressure management).",
+      "followUpQuestion": "Can you elaborate on proven experience with streaming or real-time data processing (web sockets, even?",
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T10:22:04.041Z"
+    },
+    {
+      "id": "must-have-qualifications-9",
+      "title": "Hands-on integration experience with large language model APIs (OpenAI or equiva",
+      "verdict": "unknown",
+      "confidence": 0,
+      "rationale": "Hands-on integration experience with large language model APIs (OpenAI or equivalent) in production.",
+      "followUpQuestion": "Can you elaborate on hands-on integration experience with large language model apis (openai or equiva?",
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T10:22:04.041Z"
+    },
+    {
+      "id": "must-have-qualifications-10",
+      "title": "Strong foundations in secure file handling, sandboxing, and IPC patterns.",
+      "verdict": "unknown",
+      "confidence": 0,
+      "rationale": "Strong foundations in secure file handling, sandboxing, and IPC patterns.",
+      "followUpQuestion": "Can you elaborate on strong foundations in secure file handling, sandboxing, and ipc patterns.?",
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T10:22:04.041Z"
+    },
+    {
+      "id": "must-have-qualifications-11",
+      "title": "Excellent communication skills and ability to document plans/process in collabor",
+      "verdict": "unknown",
+      "confidence": 0,
+      "rationale": "Excellent communication skills and ability to document plans/process in collaborative environments.",
+      "followUpQuestion": "Can you elaborate on excellent communication skills and ability to document plans/process in collabor?",
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T10:22:04.041Z"
+    },
+    {
+      "id": "nice-to-have-12",
+      "title": "Experience with Marketo, Greenhouse, or other HR tech integrations.",
+      "verdict": "unknown",
+      "confidence": 0,
+      "rationale": "Experience with Marketo, Greenhouse, or other HR tech integrations.",
+      "followUpQuestion": "Can you elaborate on experience with marketo, greenhouse, or other hr tech integrations.?",
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T10:22:04.041Z"
+    },
+    {
+      "id": "nice-to-have-13",
+      "title": "Familiarity with Markdown report generation, NDJSON event logs, and analytics pi",
+      "verdict": "unknown",
+      "confidence": 0,
+      "rationale": "Familiarity with Markdown report generation, NDJSON event logs, and analytics pipelines.",
+      "followUpQuestion": "Can you elaborate on familiarity with markdown report generation, ndjson event logs, and analytics pi?",
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T10:22:04.041Z"
+    },
+    {
+      "id": "nice-to-have-14",
+      "title": "Background in conversational AI, speech transcription, or voice UX.",
+      "verdict": "unknown",
+      "confidence": 0,
+      "rationale": "Background in conversational AI, speech transcription, or voice UX.",
+      "followUpQuestion": "Can you elaborate on background in conversational ai, speech transcription, or voice ux.?",
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T10:22:04.041Z"
+    },
+    {
+      "id": "nice-to-have-15",
+      "title": "What Success Looks Like (First 90 Days)",
+      "verdict": "unknown",
+      "confidence": 0,
+      "rationale": "What Success Looks Like (First 90 Days)",
+      "followUpQuestion": "Can you elaborate on what success looks like (first 90 days)?",
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T10:22:04.041Z"
+    },
+    {
+      "id": "nice-to-have-16",
+      "title": "Deliver JD ingestion + requirement extraction subsystem with persisted metadata ",
+      "verdict": "unknown",
+      "confidence": 0,
+      "rationale": "Deliver JD ingestion + requirement extraction subsystem with persisted metadata and embeddings.",
+      "followUpQuestion": "Can you elaborate on deliver jd ingestion + requirement extraction subsystem with persisted metadata ?",
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T10:22:04.041Z"
+    },
+    {
+      "id": "nice-to-have-17",
+      "title": "Implement evidence tracker capable of replaying interview transcripts into struc",
+      "verdict": "unknown",
+      "confidence": 0,
+      "rationale": "Implement evidence tracker capable of replaying interview transcripts into structured events.",
+      "followUpQuestion": "Can you elaborate on implement evidence tracker capable of replaying interview transcripts into struc?",
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T10:22:04.041Z"
+    },
+    {
+      "id": "nice-to-have-18",
+      "title": "Collaborate with the reasoning team to ship a “live coaching” beta that surfaces",
+      "verdict": "unknown",
+      "confidence": 0,
+      "rationale": "Collaborate with the reasoning team to ship a “live coaching” beta that surfaces prompts with <3s latency.",
+      "followUpQuestion": "Can you elaborate on collaborate with the reasoning team to ship a “live coaching” beta that surfaces?",
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T10:22:04.041Z"
+    },
+    {
+      "id": "nice-to-have-19",
+      "title": "Establish observability dashboards tracking pipeline health, API errors, and cos",
+      "verdict": "unknown",
+      "confidence": 0,
+      "rationale": "Establish observability dashboards tracking pipeline health, API errors, and cost metrics.",
+      "followUpQuestion": "Can you elaborate on establish observability dashboards tracking pipeline health, api errors, and cos?",
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T10:22:04.041Z"
+    },
+    {
+      "id": "nice-to-have-20",
+      "title": "Use this as a “test JD” whenever you need to feed the new JD ingestion/scoring f",
+      "verdict": "unknown",
+      "confidence": 0,
+      "rationale": "Use this as a “test JD” whenever you need to feed the new JD ingestion/scoring flows.",
+      "followUpQuestion": "Can you elaborate on use this as a “test jd” whenever you need to feed the new jd ingestion/scoring f?",
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T10:22:04.041Z"
+    }
+  ]
+}

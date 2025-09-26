@@ -1,0 +1,164 @@
+{
+  "sessionId": "2025-09-23T09-06-05",
+  "overallFit": 17,
+  "updatedAt": "2025-09-23T09:08:19.390Z",
+  "revision": 35,
+  "requirements": {
+    "fallback-4": {
+      "id": "fallback-4",
+      "title": "Type: Full-time",
+      "confidence": 31,
+      "verdict": "likely",
+      "reasoning": "Recent evidence (speaker @ 2025-09-23T09:07:26.293Z): \"Real-time\" (score 0.333).",
+      "followUpQuestion": null,
+      "mustHave": true,
+      "niceToHave": false,
+      "lastUpdated": "2025-09-23T09:08:19.390Z"
+    },
+    "fallback-5": {
+      "id": "fallback-5",
+      "title": "About the Role",
+      "confidence": 33,
+      "verdict": "likely",
+      "reasoning": "Recent evidence (speaker @ 2025-09-23T09:08:17.433Z): \"while keeping the solution stable.\" (score 0.333).",
+      "followUpQuestion": null,
+      "mustHave": true,
+      "niceToHave": false,
+      "lastUpdated": "2025-09-23T09:08:19.390Z"
+    },
+    "fallback-1": {
+      "id": "fallback-1",
+      "title": "Senior Full-Stack Engineer (Real-Time AI Platforms)",
+      "confidence": 23,
+      "verdict": "needs_more",
+      "reasoning": "Recent evidence (speaker @ 2025-09-23T09:07:26.293Z): \"Real-time\" (score 0.286).",
+      "followUpQuestion": null,
+      "mustHave": true,
+      "niceToHave": false,
+      "lastUpdated": "2025-09-23T09:08:19.390Z"
+    },
+    "fallback-8": {
+      "id": "fallback-8",
+      "title": "Design, build, and maintain Electron/Node.js features that capture JD inputs, st",
+      "confidence": 7,
+      "verdict": "risk",
+      "reasoning": "Recent evidence (speaker @ 2025-09-23T09:08:19.384Z): \"and transparent.\" (score 0.067).",
+      "followUpQuestion": null,
+      "mustHave": true,
+      "niceToHave": false,
+      "lastUpdated": "2025-09-23T09:08:19.390Z"
+    },
+    "fallback-10": {
+      "id": "fallback-10",
+      "title": "Integrate OpenAI Realtime/Responses/Embeddings APIs with strong attention to rel",
+      "confidence": 7,
+      "verdict": "risk",
+      "reasoning": "Recent evidence (speaker @ 2025-09-23T09:08:19.384Z): \"and transparent.\" (score 0.063).",
+      "followUpQuestion": null,
+      "mustHave": true,
+      "niceToHave": false,
+      "lastUpdated": "2025-09-23T09:08:19.390Z"
+    },
+    "fallback-6": {
+      "id": "fallback-6",
+      "title": "We’re building a real-time interview intelligence platform that scores candidate",
+      "confidence": 4,
+      "verdict": "risk",
+      "reasoning": "Recent evidence (speaker @ 2025-09-23T09:08:19.384Z): \"and transparent.\" (score 0.033).",
+      "followUpQuestion": null,
+      "mustHave": true,
+      "niceToHave": false,
+      "lastUpdated": "2025-09-23T09:08:19.390Z"
+    },
+    "fallback-9": {
+      "id": "fallback-9",
+      "title": "Implement high-performance data pipelines that transform audio transcripts into ",
+      "confidence": 11,
+      "verdict": "risk",
+      "reasoning": "Recent evidence (speaker @ 2025-09-23T09:08:08.742Z): \"I believe that my experience in streaming data processing\" (score 0.133).",
+      "followUpQuestion": null,
+      "mustHave": true,
+      "niceToHave": false,
+      "lastUpdated": "2025-09-23T09:08:19.390Z"
+    }
+  },
+  "groups": [
+    {
+      "id": "fallback-4",
+      "title": "Type: Full-time",
+      "verdict": "likely",
+      "confidence": 31,
+      "rationale": "Recent evidence (speaker @ 2025-09-23T09:07:26.293Z): \"Real-time\" (score 0.333).",
+      "followUpQuestion": null,
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T09:08:19.390Z"
+    },
+    {
+      "id": "fallback-5",
+      "title": "About the Role",
+      "verdict": "likely",
+      "confidence": 33,
+      "rationale": "Recent evidence (speaker @ 2025-09-23T09:08:17.433Z): \"while keeping the solution stable.\" (score 0.333).",
+      "followUpQuestion": null,
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T09:08:19.390Z"
+    },
+    {
+      "id": "fallback-1",
+      "title": "Senior Full-Stack Engineer (Real-Time AI Platforms)",
+      "verdict": "needs_more",
+      "confidence": 23,
+      "rationale": "Recent evidence (speaker @ 2025-09-23T09:07:26.293Z): \"Real-time\" (score 0.286).",
+      "followUpQuestion": null,
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T09:08:19.390Z"
+    },
+    {
+      "id": "fallback-8",
+      "title": "Design, build, and maintain Electron/Node.js features that capture JD inputs, st",
+      "verdict": "risk",
+      "confidence": 7,
+      "rationale": "Recent evidence (speaker @ 2025-09-23T09:08:19.384Z): \"and transparent.\" (score 0.067).",
+      "followUpQuestion": null,
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T09:08:19.390Z"
+    },
+    {
+      "id": "fallback-10",
+      "title": "Integrate OpenAI Realtime/Responses/Embeddings APIs with strong attention to rel",
+      "verdict": "risk",
+      "confidence": 7,
+      "rationale": "Recent evidence (speaker @ 2025-09-23T09:08:19.384Z): \"and transparent.\" (score 0.063).",
+      "followUpQuestion": null,
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T09:08:19.390Z"
+    },
+    {
+      "id": "fallback-6",
+      "title": "We’re building a real-time interview intelligence platform that scores candidate",
+      "verdict": "risk",
+      "confidence": 4,
+      "rationale": "Recent evidence (speaker @ 2025-09-23T09:08:19.384Z): \"and transparent.\" (score 0.033).",
+      "followUpQuestion": null,
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T09:08:19.390Z"
+    },
+    {
+      "id": "fallback-9",
+      "title": "Implement high-performance data pipelines that transform audio transcripts into ",
+      "verdict": "risk",
+      "confidence": 11,
+      "rationale": "Recent evidence (speaker @ 2025-09-23T09:08:08.742Z): \"I believe that my experience in streaming data processing\" (score 0.133).",
+      "followUpQuestion": null,
+      "notableQuotes": [],
+      "conflicts": [],
+      "lastUpdated": "2025-09-23T09:08:19.390Z"
+    }
+  ]
+}

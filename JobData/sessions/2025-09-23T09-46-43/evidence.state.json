@@ -1,0 +1,399 @@
+{
+  "sessionId": "2025-09-23T09-46-43",
+  "revision": 15,
+  "requirements": {
+    "fallback-4": {
+      "id": "fallback-4",
+      "confidence": 28,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-4",
+          "timestamp": "2025-09-23T09:46:56.435Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "Most of that time on product teams.",
+          "tokens": [
+            "time",
+            "time"
+          ]
+        },
+        {
+          "chunkId": "chunk-3",
+          "timestamp": "2025-09-23T09:46:54.580Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "And for the last seven years, I've been working as a full-stack developer.",
+          "tokens": [
+            "full",
+            "full"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-23T09:46:56.435Z",
+      "observations": 2,
+      "topScore": 0.3333333333333333
+    },
+    "fallback-5": {
+      "id": "fallback-5",
+      "confidence": 31,
+      "status": "likely",
+      "evidence": [
+        {
+          "chunkId": "chunk-15",
+          "timestamp": "2025-09-23T09:47:28.585Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "The application can handle hour-long or longer sessions without memory leaks.",
+          "tokens": [
+            "the",
+            "the"
+          ]
+        },
+        {
+          "chunkId": "chunk-9",
+          "timestamp": "2025-09-23T09:47:11.927Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "I'm responsible for the architecture using Node.js and Electron.",
+          "tokens": [
+            "the",
+            "the"
+          ]
+        },
+        {
+          "chunkId": "chunk-3",
+          "timestamp": "2025-09-23T09:46:54.580Z",
+          "source": "speaker",
+          "score": 0.333,
+          "text": "And for the last seven years, I've been working as a full-stack developer.",
+          "tokens": [
+            "the",
+            "the"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-23T09:47:28.585Z",
+      "observations": 3,
+      "topScore": 0.3333333333333333
+    },
+    "fallback-1": {
+      "id": "fallback-1",
+      "confidence": 15,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-5",
+          "timestamp": "2025-09-23T09:46:59.633Z",
+          "source": "speaker",
+          "score": 0.143,
+          "text": "building real-world user interactions.",
+          "tokens": [
+            "real",
+            "real"
+          ]
+        },
+        {
+          "chunkId": "chunk-4",
+          "timestamp": "2025-09-23T09:46:56.435Z",
+          "source": "speaker",
+          "score": 0.143,
+          "text": "Most of that time on product teams.",
+          "tokens": [
+            "time",
+            "time"
+          ]
+        },
+        {
+          "chunkId": "chunk-3",
+          "timestamp": "2025-09-23T09:46:54.580Z",
+          "source": "speaker",
+          "score": 0.286,
+          "text": "And for the last seven years, I've been working as a full-stack developer.",
+          "tokens": [
+            "full",
+            "stack",
+            "full",
+            "stack"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-23T09:46:59.633Z",
+      "observations": 3,
+      "topScore": 0.2857142857142857
+    },
+    "fallback-8": {
+      "id": "fallback-8",
+      "confidence": 7,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-22",
+          "timestamp": "2025-09-23T09:47:42.812Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "and Live Report feature.",
+          "tokens": [
+            "and",
+            "and",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-20",
+          "timestamp": "2025-09-23T09:47:39.963Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "focusing on component reuse and minimizing custom styles.",
+          "tokens": [
+            "and",
+            "and",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-16",
+          "timestamp": "2025-09-23T09:47:30.226Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "and with clear tracing.",
+          "tokens": [
+            "and",
+            "and",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-13",
+          "timestamp": "2025-09-23T09:47:22.429Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "and implemented a backpressor cue.",
+          "tokens": [
+            "and",
+            "and",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-12",
+          "timestamp": "2025-09-23T09:47:20.102Z",
+          "source": "speaker",
+          "score": 0.133,
+          "text": "Set up stream serialization in Markdown and NDJSON.",
+          "tokens": [
+            "and",
+            "and",
+            "stream",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-10",
+          "timestamp": "2025-09-23T09:47:14.312Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "I moved logging and signaling to separate...",
+          "tokens": [
+            "and",
+            "and",
+            "and"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-23T09:47:42.812Z",
+      "observations": 10,
+      "topScore": 0.13333333333333333
+    },
+    "fallback-10": {
+      "id": "fallback-10",
+      "confidence": 7,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-22",
+          "timestamp": "2025-09-23T09:47:42.812Z",
+          "source": "speaker",
+          "score": 0.063,
+          "text": "and Live Report feature.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-20",
+          "timestamp": "2025-09-23T09:47:39.963Z",
+          "source": "speaker",
+          "score": 0.063,
+          "text": "focusing on component reuse and minimizing custom styles.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-18",
+          "timestamp": "2025-09-23T09:47:34.417Z",
+          "source": "speaker",
+          "score": 0.063,
+          "text": "I typically work with React.",
+          "tokens": [
+            "with",
+            "with"
+          ]
+        },
+        {
+          "chunkId": "chunk-16",
+          "timestamp": "2025-09-23T09:47:30.226Z",
+          "source": "speaker",
+          "score": 0.125,
+          "text": "and with clear tracing.",
+          "tokens": [
+            "with",
+            "with",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-13",
+          "timestamp": "2025-09-23T09:47:22.429Z",
+          "source": "speaker",
+          "score": 0.063,
+          "text": "and implemented a backpressor cue.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-12",
+          "timestamp": "2025-09-23T09:47:20.102Z",
+          "source": "speaker",
+          "score": 0.063,
+          "text": "Set up stream serialization in Markdown and NDJSON.",
+          "tokens": [
+            "and"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-23T09:47:42.812Z",
+      "observations": 9,
+      "topScore": 0.125
+    },
+    "fallback-6": {
+      "id": "fallback-6",
+      "confidence": 6,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-22",
+          "timestamp": "2025-09-23T09:47:42.812Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "and Live Report feature.",
+          "tokens": [
+            "live",
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-20",
+          "timestamp": "2025-09-23T09:47:39.963Z",
+          "source": "speaker",
+          "score": 0.033,
+          "text": "focusing on component reuse and minimizing custom styles.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-17",
+          "timestamp": "2025-09-23T09:47:31.982Z",
+          "source": "speaker",
+          "score": 0.033,
+          "text": "From a front-end perspective.",
+          "tokens": [
+            "end",
+            "end"
+          ]
+        },
+        {
+          "chunkId": "chunk-16",
+          "timestamp": "2025-09-23T09:47:30.226Z",
+          "source": "speaker",
+          "score": 0.033,
+          "text": "and with clear tracing.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-13",
+          "timestamp": "2025-09-23T09:47:22.429Z",
+          "source": "speaker",
+          "score": 0.033,
+          "text": "and implemented a backpressor cue.",
+          "tokens": [
+            "and"
+          ]
+        },
+        {
+          "chunkId": "chunk-12",
+          "timestamp": "2025-09-23T09:47:20.102Z",
+          "source": "speaker",
+          "score": 0.033,
+          "text": "Set up stream serialization in Markdown and NDJSON.",
+          "tokens": [
+            "and"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-23T09:47:42.812Z",
+      "observations": 12,
+      "topScore": 0.13333333333333333
+    },
+    "fallback-9": {
+      "id": "fallback-9",
+      "confidence": 10,
+      "status": "possible",
+      "evidence": [
+        {
+          "chunkId": "chunk-8",
+          "timestamp": "2025-09-23T09:47:07.427Z",
+          "source": "speaker",
+          "score": 0.133,
+          "text": "we're building a platform that analyzes live audio feeds from meetings.",
+          "tokens": [
+            "that",
+            "audio",
+            "that",
+            "audio"
+          ]
+        },
+        {
+          "chunkId": "chunk-5",
+          "timestamp": "2025-09-23T09:46:59.633Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "building real-world user interactions.",
+          "tokens": [
+            "real"
+          ]
+        },
+        {
+          "chunkId": "chunk-4",
+          "timestamp": "2025-09-23T09:46:56.435Z",
+          "source": "speaker",
+          "score": 0.067,
+          "text": "Most of that time on product teams.",
+          "tokens": [
+            "that",
+            "that"
+          ]
+        }
+      ],
+      "lastUpdated": "2025-09-23T09:47:07.427Z",
+      "observations": 3,
+      "topScore": 0.13333333333333333
+    }
+  },
+  "lastChunkAt": "2025-09-23T09:47:42.812Z"
+}
